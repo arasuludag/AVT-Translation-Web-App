@@ -1,14 +1,9 @@
 import { useEffect, useState } from "react";
 
 import SubtitleBox from "./SubtitleBox";
+import { Subtitle } from "./subtitleSlice";
 
 function OriginalTranscript() {
-  interface Subtitle {
-    start_time: string;
-    end_time: string;
-    text: string;
-  }
-
   const [subtitles, setSubtitles] = useState<Subtitle[]>([]);
 
   useEffect(() => {
@@ -17,7 +12,7 @@ function OriginalTranscript() {
       .then((data) => setSubtitles(data));
   }, []);
 
-  console.log(subtitles);
+  // console.log(subtitles);
 
   return (
     <div>

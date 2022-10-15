@@ -1,7 +1,7 @@
-import React from "react";
 import Grid from "@mui/material/Grid";
 
 import OriginalTranscript from "./OriginalTranscript";
+import WorkingTranslation from "./WorkingTranslation";
 
 function SubtitleSection() {
   return (
@@ -12,14 +12,11 @@ function SubtitleSection() {
       alignItems="flex-start"
       style={{ overflowY: "scroll", height: "100vh" }}
     >
-      <Grid item md={5}>
+      <Grid item md={6}>
         <OriginalTranscript />
       </Grid>
-      <Grid item md={5}>
-        working on it
-      </Grid>
-      <Grid item md={2}>
-        audio visualize
+      <Grid item md={6}>
+        <WorkingTranslation />
       </Grid>
     </Grid>
   );

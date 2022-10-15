@@ -5,31 +5,30 @@ import Typography from "@mui/material/Typography";
 import { Editor } from "react-draft-wysiwyg";
 import { EditorState, ContentState } from "draft-js";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
+import { stateToHTML } from "draft-js-export-html";
 
 import "./subtitleSection.css";
-
-interface Subtitle {
-  start_time: string;
-  end_time: string;
-  text: string;
-}
+import Alert from "@mui/material/Alert";
+import { insertToSubtitle, Subtitle } from "./subtitleSlice";
+import { useAppDispatch } from "../../app/hooks";
 
 interface ChildComponentProps {
   subtitle: Subtitle;
   readOnly: boolean;
+  index?: number;
 }
 
 function SubtitleBox(props: ChildComponentProps) {
+  const dispatch = useAppDispatch();
+
   const [editorState, setEditorState] = React.useState(() =>
     EditorState.createWithContent(
       ContentState.createFromText(props.subtitle.text)
     )
   );
 
-  console.log(editorState);
-
   return (
-    <Card sx={{ minWidth: 275, margin: "20px" }}>
+    <Card sx={{ minWidth: 275, minHeight: 250, margin: "20px" }}>
       <CardContent>
         <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
           {props.subtitle.start_time} - {props.subtitle.end_time}
@@ -40,14 +39,29 @@ function SubtitleBox(props: ChildComponentProps) {
           toolbarClassName="toolbarClassName"
           wrapperClassName="wrapperClassName"
           editorClassName="editorClassName"
+          onChange={() =>
+            dispatch(
+              insertToSubtitle({
+                id: props.index,
+                start_time: props.subtitle.start_time,
+                end_time: props.subtitle.end_time,
+                text: stateToHTML(editorState.getCurrentContent()),
+                note: props.subtitle.note,
+                position: props.subtitle.position,
+              })
+            )
+          }
           onEditorStateChange={setEditorState}
           toolbar={{
-            options: ["inline", "history"],
+            options: props.readOnly ? [] : ["inline", "history"],
             inline: {
-              options: ["bold", "italic"],
+              options: props.readOnly ? [] : ["bold", "italic", "underline"],
             },
           }}
         />
+        {props.subtitle.note ? (
+          <Alert severity="info">{props.subtitle.note}</Alert>
+        ) : null}
       </CardContent>
     </Card>
   );
