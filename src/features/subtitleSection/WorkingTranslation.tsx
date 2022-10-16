@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useAppSelector, useAppDispatch } from "../../app/hooks";
 
-import SubtitleBox from "./SubtitleBox";
+import SubtitleBox from "./subtitleBox/SubtitleBox";
 import { fetchSubtitle, selectSubtitles, Subtitle } from "./subtitleSlice";
 
 function OriginalTranscript() {
@@ -23,7 +23,8 @@ function OriginalTranscript() {
             subtitle={subtitle}
             readOnly={false}
             index={index}
-            key={index}
+            subtitleCount={subtitles.length}
+            key={subtitle.id}
           />
         );
       })}

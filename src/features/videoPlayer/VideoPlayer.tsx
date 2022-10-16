@@ -1,45 +1,71 @@
-import { useEffect, useState } from "react";
-import ReactPlayer from "react-player";
+import { useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
-import { selectSubtitles, Subtitle } from "../subtitleSection/subtitleSlice";
-import { selectVideo, videoProgress } from "./videoSlice";
+import {
+  selectActiveSubtitle,
+  selectSubtitles,
+  selectTranscript,
+  selectWhichSubToShow,
+  setActiveSubtitle,
+} from "../subtitleSection/subtitleSlice";
+import { selectVideoCurrentTime, setVideoCurrentTime } from "./videoSlice";
 import parse from "html-react-parser";
 import "./videoPlayer.css";
+import "video.js/dist/video-js.css";
+import { useVideoJS } from "react-hook-videojs";
+
+import SubtitleToggle from "./SubtitleToggle";
 
 function VideoPlayer() {
-  const [activeSubtitle, setActiveSubtitle] = useState<Subtitle>({
-    text: "",
-    start_time: 0,
-    end_time: 0,
-    note: "",
-    position: 1,
-  });
   const dispatch = useAppDispatch();
+  const currentTime = useAppSelector(selectVideoCurrentTime);
   const subtitles = useAppSelector(selectSubtitles);
-  const progress = useAppSelector(selectVideo);
+  const transcript = useAppSelector(selectTranscript);
+  const activeSubtitle = useAppSelector(selectActiveSubtitle);
+  const whichSubToShow = useAppSelector(selectWhichSubToShow);
 
   useEffect(() => {
-    setActiveSubtitle(
-      subtitles.find(
-        (subtitle) =>
-          subtitle.start_time <= progress.playedSeconds * 1000 &&
-          subtitle.end_time > progress.playedSeconds * 1000
-      ) || { text: "", start_time: 0, end_time: 0, note: "", position: 1 }
-    );
-  }, [progress, subtitles]);
+    dispatch(setActiveSubtitle(currentTime));
+  }, [currentTime, dispatch]);
+
+  const videoUrl = "/video.mp4";
+  const className = "my-class";
+  const { Video, player, ready } = useVideoJS(
+    {
+      sources: [{ src: videoUrl }],
+      controls: true,
+      fluid: true,
+      userActions: { hotkeys: true },
+      controlBar: {
+        fullscreenToggle: false,
+        pictureInPictureToggle: false,
+        remainingTimeDisplay: true,
+        volumePanel: true,
+        currentTimeDisplay: true,
+        timeDivider: true,
+        durationDisplay: true,
+      },
+    },
+    className // optional
+  );
+
+  if (ready)
+    player?.on("timeupdate", () => {
+      dispatch(
+        setVideoCurrentTime(Math.round(player!.currentTime() * 10) / 10)
+      );
+    });
+
+  function subtitleText() {
+    if (whichSubToShow === "original")
+      return parse(transcript[activeSubtitle]?.text || "");
+    else return parse(subtitles[activeSubtitle]?.text || "");
+  }
 
   return (
     <div className="container">
-      <ReactPlayer
-        url="/video.mp4"
-        width="100%"
-        height="100%"
-        controls={true}
-        onProgress={(progress) => {
-          dispatch(videoProgress(progress));
-        }}
-      />
-      <div className="subtitle">{parse(activeSubtitle.text)}</div>
+      <Video />
+      <div className="subtitle">{subtitleText()}</div>
+      <SubtitleToggle />
     </div>
   );
 }

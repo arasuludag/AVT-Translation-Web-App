@@ -3,3 +3,12 @@
   border: 0ch;
   height: 40px;
 }
+
+.wrapperClassName {
+  height: 180px;
+  overflow: hidden;
+}
+
+.editorClassName {
+  overflow: hidden;
+}
