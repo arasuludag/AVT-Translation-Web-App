@@ -1,16 +1,18 @@
 import { useAppDispatch } from "../../../app/hooks";
 import FormDialog from "./FormDialog";
 import { insertToSubtitle } from "../subtitleSlice";
+import { useState } from "react";
 
 export default function AddNote(props: { index: number; note: string }) {
   const dispatch = useAppDispatch();
+  const [displayedNote, setDisplayedNote] = useState(props.note);
 
   return (
     <div>
       <FormDialog
-        buttonName={props.note ? "Edit Note" : "Add Note"}
-        text={props.note}
-        onSubmit={(note) =>
+        buttonName={displayedNote ? "Edit Note" : "Add Note"}
+        text={displayedNote}
+        onSubmit={(note) => {
           dispatch(
             insertToSubtitle({
               subtitle: {
@@ -18,8 +20,9 @@ export default function AddNote(props: { index: number; note: string }) {
               },
               index: props.index,
             })
-          )
-        }
+          );
+          setDisplayedNote(note);
+        }}
       />
     </div>
   );

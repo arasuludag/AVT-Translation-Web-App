@@ -22,10 +22,10 @@ function App() {
         alignItems="flex-start"
         className="App"
       >
-        <Grid item md={12} lg={4}>
+        <Grid item md={12} lg={5}>
           <VideoPlayer />
         </Grid>
-        <Grid item md={12} lg={8}>
+        <Grid item md={12} lg={7}>
           <SubtitleSection />
         </Grid>
       </Grid>

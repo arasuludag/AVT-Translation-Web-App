@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import {
   selectActiveSubtitle,
@@ -7,28 +7,24 @@ import {
   selectWhichSubToShow,
   setActiveSubtitle,
 } from "../subtitleSection/subtitleSlice";
-import { selectVideoCurrentTime, setVideoCurrentTime } from "./videoSlice";
 import parse from "html-react-parser";
 import "./videoPlayer.css";
 import "video.js/dist/video-js.css";
 import { useVideoJS } from "react-hook-videojs";
 
 import SubtitleToggle from "./SubtitleToggle";
+import { selectVideoTime } from "./videoSlice";
 
 function VideoPlayer() {
   const dispatch = useAppDispatch();
-  const currentTime = useAppSelector(selectVideoCurrentTime);
+  const timeInMS = useAppSelector(selectVideoTime);
   const subtitles = useAppSelector(selectSubtitles);
   const transcript = useAppSelector(selectTranscript);
   const activeSubtitle = useAppSelector(selectActiveSubtitle);
   const whichSubToShow = useAppSelector(selectWhichSubToShow);
 
-  useEffect(() => {
-    dispatch(setActiveSubtitle(currentTime));
-  }, [currentTime, dispatch]);
-
   const videoUrl = "/video.mp4";
-  const className = "my-class";
+  const className = "videoPlayer";
   const { Video, player, ready } = useVideoJS(
     {
       sources: [{ src: videoUrl }],
@@ -48,11 +44,13 @@ function VideoPlayer() {
     className // optional
   );
 
+  useEffect(() => {
+    if (ready) player!.currentTime(timeInMS);
+  }, [player, ready, timeInMS]);
+
   if (ready)
     player?.on("timeupdate", () => {
-      dispatch(
-        setVideoCurrentTime(Math.round(player!.currentTime() * 10) / 10)
-      );
+      dispatch(setActiveSubtitle(player!.currentTime() * 1000));
     });
 
   function subtitleText() {

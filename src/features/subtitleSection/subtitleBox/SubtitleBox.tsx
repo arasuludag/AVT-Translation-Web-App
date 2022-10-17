@@ -19,6 +19,7 @@ import { CardActions, InputAdornment, TextField } from "@mui/material";
 
 import AddNote from "./AddNote";
 import AddBox from "./AddBox";
+import GoToSecondButton from "./GoToSecondButton";
 
 interface ChildComponentProps {
   subtitle: Subtitle;
@@ -33,6 +34,7 @@ function SubtitleBox(props: ChildComponentProps) {
   const whichSubToShow = useAppSelector(selectWhichSubToShow);
 
   const [border, setBorder] = useState<number>(0);
+  const [startTime, setStartTime] = useState(props.subtitle.start_time); // For the "Goto button"
 
   const [editorState, setEditorState] = useState(() =>
     EditorState.createWithContent(
@@ -68,7 +70,7 @@ function SubtitleBox(props: ChildComponentProps) {
     >
       <CardContent>
         <TextField
-          sx={{ width: "15ch", right: 20 }}
+          sx={{ width: "15ch", right: 15 }}
           id="outlined-number"
           label="Start"
           type="number"
@@ -81,7 +83,7 @@ function SubtitleBox(props: ChildComponentProps) {
           }}
           disabled={props.readOnly}
           size="small"
-          onBlur={(event) =>
+          onChange={(event) => {
             dispatch(
               insertToSubtitle({
                 subtitle: {
@@ -89,11 +91,13 @@ function SubtitleBox(props: ChildComponentProps) {
                 },
                 index: props.index,
               })
-            )
-          }
+            );
+            setStartTime(parseInt(event.target.value));
+          }}
         />
+        <GoToSecondButton ms={startTime} />
         <TextField
-          sx={{ width: "15ch", left: 20 }}
+          sx={{ width: "15ch", left: 15 }}
           id="outlined-number"
           label="End"
           type="number"
@@ -106,7 +110,7 @@ function SubtitleBox(props: ChildComponentProps) {
           }}
           disabled={props.readOnly}
           size="small"
-          onBlur={(event) =>
+          onChange={(event) =>
             dispatch(
               insertToSubtitle({
                 subtitle: {
@@ -123,7 +127,7 @@ function SubtitleBox(props: ChildComponentProps) {
           toolbarClassName="toolbarClassName"
           wrapperClassName="wrapperClassName"
           editorClassName="editorClassName"
-          onBlur={() =>
+          onChange={() =>
             dispatch(
               insertToSubtitle({
                 subtitle: {

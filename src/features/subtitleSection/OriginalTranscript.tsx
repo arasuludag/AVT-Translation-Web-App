@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo } from "react";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
 
 import SubtitleBox from "./subtitleBox/SubtitleBox";
@@ -19,21 +19,24 @@ function OriginalTranscript() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  return (
-    <div>
-      {subtitles.map((subtitle: Subtitle) => {
+  const optimizedSubtitleMap = useMemo(
+    () =>
+      subtitles.map((subtitle: Subtitle, index: number) => {
         return (
           <SubtitleBox
             subtitle={subtitle}
             readOnly={true}
-            index={subtitle.id}
+            index={index}
             subtitleCount={subtitles.length}
             key={subtitle.id}
           />
         );
-      })}
-    </div>
+      }),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [subtitles.length]
   );
+
+  return <div>{optimizedSubtitleMap}</div>;
 }
 
 export default OriginalTranscript;
