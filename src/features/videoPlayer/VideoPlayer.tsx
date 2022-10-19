@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Player } from "react-tuby";
 import "react-tuby/css/main.css";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
@@ -6,40 +6,63 @@ import {
   selectActiveSubtitle,
   selectSubtitles,
   selectTranscript,
-  selectWhichSubToShow,
   setActiveSubtitle,
 } from "../subtitleSection/subtitleSlice";
 import parse from "html-react-parser";
 import "./videoPlayer.css";
 
 import SubtitleToggle from "./SubtitleToggle";
+import SeekBackOrForward from "./SeekBackOrForwardButtons";
+import ShowCurrentTime from "./ShowCurrentTime";
 import { selectVideoTime } from "./videoSlice";
+import { Box } from "@mui/material";
 
 function VideoPlayer() {
   const dispatch = useAppDispatch();
   const videoTime = useAppSelector(selectVideoTime);
-  const subtitles = useAppSelector(selectSubtitles);
-  const transcript = useAppSelector(selectTranscript);
   const activeSubtitle = useAppSelector(selectActiveSubtitle);
-  const whichSubToShow = useAppSelector(selectWhichSubToShow);
+  const subtitle = useAppSelector(selectSubtitles);
+  const transcript = useAppSelector(selectTranscript);
 
   const player = useRef<HTMLVideoElement>(null);
 
+  // Set video time if VideoTime updates.
   useEffect(() => {
     if (player.current) player.current.currentTime = videoTime.seconds;
   }, [player, videoTime]);
 
-  function subtitleText() {
-    if (whichSubToShow === "original")
-      return parse(transcript[activeSubtitle]?.text || "");
-    else return parse(subtitles[activeSubtitle]?.text || "");
-  }
+  const [currentTime, setCurrentTime] = useState<number>(0);
 
   useEffect(() => {
+    // Updates when video is progressing.
     player.current?.addEventListener("timeupdate", () => {
-      dispatch(setActiveSubtitle((player.current?.currentTime || 0) * 1000));
+      setCurrentTime(Math.round(player.current!.currentTime * 1000));
     });
-  }, [dispatch]);
+
+    // Prevent right click.
+    // document.addEventListener("contextmenu", (e) => {
+    //   e.preventDefault();
+    // });
+  }, []);
+
+  useEffect(() => {
+    dispatch(setActiveSubtitle(currentTime));
+  }, [currentTime, dispatch]);
+
+  // Forward or backward time.
+  function onSeek(direction: boolean, howMuch: number) {
+    if (player.current) {
+      direction
+        ? (player.current.currentTime += howMuch)
+        : (player.current.currentTime -= howMuch);
+    }
+  }
+
+  function showSubtitle() {
+    if (activeSubtitle.whichOne === "original")
+      return parse(transcript[activeSubtitle.index]?.text || "");
+    else return parse(subtitle[activeSubtitle.index]?.text || "");
+  }
 
   return (
     <div className="container">
@@ -51,8 +74,26 @@ function VideoPlayer() {
         seekDuration={0.03}
         keyboardShortcut={false}
       />
-      <div className="subtitle">{subtitleText()}</div>
-      <SubtitleToggle />
+      <div className="subtitle">{showSubtitle()}</div>
+      <Box
+        sx={{
+          position: "absolute",
+          top: "60%",
+          right: "0%",
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          "& > *": {
+            m: 1,
+          },
+        }}
+      >
+        <SubtitleToggle currentTime={currentTime} />
+        <SeekBackOrForward
+          onSeek={(direction, howMuch) => onSeek(direction, howMuch)}
+        />
+        <ShowCurrentTime currentTime={currentTime} />
+      </Box>
     </div>
   );
 }

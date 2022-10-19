@@ -13,16 +13,14 @@ export interface Subtitle {
 export interface SubtitleFetch {
   transcriptData: Subtitle[];
   workingOndata: Subtitle[];
-  activeSubtitle: number;
-  subtitleToDisplay: "original" | "workingOn";
+  subtitleToDisplay: { whichOne: "original" | "workingOn"; index: number };
   status: "idle" | "loading" | "failed";
 }
 
 const initialState: SubtitleFetch = {
   transcriptData: [],
   workingOndata: [],
-  activeSubtitle: -1,
-  subtitleToDisplay: "original",
+  subtitleToDisplay: { whichOne: "original", index: -1 },
   status: "idle",
 };
 
@@ -58,14 +56,24 @@ export const subtitleSlice = createSlice({
         position: 1,
       });
     },
+    deleteBox: (
+      state,
+      action: PayloadAction<{
+        index: number;
+      }>
+    ) => {
+      const index = action.payload.index;
+
+      state.workingOndata.splice(index, 1);
+    },
     setActiveSubtitle: (state, action: PayloadAction<number>) => {
       let subtitles: Subtitle[];
 
-      if (state.subtitleToDisplay === "original")
+      if (state.subtitleToDisplay.whichOne === "original")
         subtitles = state.transcriptData;
       else subtitles = state.workingOndata;
 
-      state.activeSubtitle = subtitles.findIndex(
+      state.subtitleToDisplay.index = subtitles.findIndex(
         (subtitle) =>
           subtitle.start_time <= action.payload &&
           subtitle.end_time > action.payload
@@ -75,7 +83,7 @@ export const subtitleSlice = createSlice({
       state,
       action: PayloadAction<"original" | "workingOn">
     ) => {
-      state.subtitleToDisplay = action.payload;
+      state.subtitleToDisplay.whichOne = action.payload;
     },
   },
   extraReducers: (builder) => {
@@ -126,15 +134,14 @@ export const {
   insertBox,
   setActiveSubtitle,
   setSubtitleToDisplay,
+  deleteBox,
 } = subtitleSlice.actions;
 
 export const selectSubtitles = (state: RootState) =>
   state.subtitle.workingOndata;
 export const selectTranscript = (state: RootState) =>
   state.subtitle.transcriptData;
-export const selectWhichSubToShow = (state: RootState) =>
-  state.subtitle.subtitleToDisplay;
 export const selectActiveSubtitle = (state: RootState) =>
-  state.subtitle.activeSubtitle;
+  state.subtitle.subtitleToDisplay;
 
 export default subtitleSlice.reducer;

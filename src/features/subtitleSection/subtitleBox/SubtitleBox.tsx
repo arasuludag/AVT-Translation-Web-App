@@ -1,25 +1,28 @@
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import { Editor } from "react-draft-wysiwyg";
-import { EditorState, ContentState } from "draft-js";
+import { EditorState } from "draft-js";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import { stateToHTML } from "draft-js-export-html";
+import { stateFromHTML } from "draft-js-import-html";
 
 import "../subtitleSection.css";
 import Alert from "@mui/material/Alert";
 import {
   insertToSubtitle,
   selectActiveSubtitle,
-  selectWhichSubToShow,
   Subtitle,
 } from "../subtitleSlice";
 import { useAppDispatch, useAppSelector } from "../../../app/hooks";
-import { useEffect, useState } from "react";
-import { CardActions, InputAdornment, TextField } from "@mui/material";
+import { useEffect, useMemo, useState } from "react";
+import { CardActions, Grid, InputAdornment, TextField } from "@mui/material";
 
 import AddNote from "./AddNote";
 import AddBox from "./AddBox";
 import GoToSecondButton from "./GoToSecondButton";
+import ChractersPerSecond from "./ChractersPerSecond";
+import DeleteBox from "./DeleteBox";
+import ChractersPerLine from "./ChractersPerLine";
 
 interface ChildComponentProps {
   subtitle: Subtitle;
@@ -31,43 +34,36 @@ interface ChildComponentProps {
 function SubtitleBox(props: ChildComponentProps) {
   const dispatch = useAppDispatch();
   const activeSubtitle = useAppSelector(selectActiveSubtitle);
-  const whichSubToShow = useAppSelector(selectWhichSubToShow);
 
-  const [border, setBorder] = useState<number>(0);
-  const [startTime, setStartTime] = useState(props.subtitle.start_time); // For the "Goto button"
+  const [time, setTime] = useState({
+    start: props.subtitle.start_time,
+    end: props.subtitle.end_time,
+  }); // For the "Goto button" and other componenents that need updated time.
 
   const [editorState, setEditorState] = useState(() =>
-    EditorState.createWithContent(
-      ContentState.createFromText(props.subtitle.text)
-    )
+    EditorState.createWithContent(stateFromHTML(props.subtitle.text))
   );
+
+  const [raised, setRaised] = useState(false);
 
   useEffect(() => {
     if (
-      ((whichSubToShow === "original" && props.readOnly) ||
-        (whichSubToShow === "workingOn" && !props.readOnly)) &&
-      activeSubtitle === props.index
+      ((activeSubtitle.whichOne === "original" && props.readOnly) ||
+        (activeSubtitle.whichOne === "workingOn" && !props.readOnly)) &&
+      activeSubtitle.index === props.index
     )
-      setBorder(1);
-    else setBorder(0);
-  }, [
-    activeSubtitle,
-    props.subtitle.id,
-    whichSubToShow,
-    props.readOnly,
-    props.index,
-  ]);
+      setRaised(true);
+    else setRaised(false);
+  }, [activeSubtitle, props.subtitle.id, props.readOnly, props.index]);
 
-  return (
-    <Card
-      sx={{
-        minWidth: 275,
-        height: 300,
-        margin: "20px",
-        border: border,
-        borderRadius: 3,
-      }}
-    >
+  const chractersPerSecond = useMemo(
+    () => <ChractersPerSecond editorState={editorState} time={time} />,
+    [editorState, time]
+  );
+
+  // So we wouldn't re-render the card every time activeSubtitle state changes.
+  const cardContent = useMemo(
+    () => (
       <CardContent>
         <TextField
           sx={{ width: "15ch", right: 15 }}
@@ -92,10 +88,10 @@ function SubtitleBox(props: ChildComponentProps) {
                 index: props.index,
               })
             );
-            setStartTime(parseInt(event.target.value));
+            setTime({ ...time, ...{ start: parseInt(event.target.value) } });
           }}
         />
-        <GoToSecondButton ms={startTime} />
+        <GoToSecondButton ms={time.start} />
         <TextField
           sx={{ width: "15ch", left: 15 }}
           id="outlined-number"
@@ -110,7 +106,7 @@ function SubtitleBox(props: ChildComponentProps) {
           }}
           disabled={props.readOnly}
           size="small"
-          onChange={(event) =>
+          onChange={(event) => {
             dispatch(
               insertToSubtitle({
                 subtitle: {
@@ -118,47 +114,99 @@ function SubtitleBox(props: ChildComponentProps) {
                 },
                 index: props.index,
               })
-            )
-          }
-        />
-        <Editor
-          readOnly={props.readOnly}
-          editorState={editorState}
-          toolbarClassName="toolbarClassName"
-          wrapperClassName="wrapperClassName"
-          editorClassName="editorClassName"
-          onChange={() =>
-            dispatch(
-              insertToSubtitle({
-                subtitle: {
-                  text: stateToHTML(editorState.getCurrentContent()),
-                },
-                index: props.index,
-              })
-            )
-          }
-          onEditorStateChange={setEditorState}
-          toolbar={{
-            options: props.readOnly ? [] : ["inline", "history"],
-            inline: {
-              options: props.readOnly ? [] : ["bold", "italic", "underline"],
-            },
+            );
+            setTime({ ...time, ...{ end: parseInt(event.target.value) } });
           }}
         />
+        <Grid container>
+          <Grid item xs={10}>
+            <Editor
+              readOnly={props.readOnly}
+              editorState={editorState}
+              toolbarClassName="toolbarClassName"
+              wrapperClassName="wrapperClassName"
+              editorClassName="editorClassName"
+              onChange={() =>
+                dispatch(
+                  insertToSubtitle({
+                    subtitle: {
+                      text: stateToHTML(editorState.getCurrentContent()),
+                    },
+                    index: props.index,
+                  })
+                )
+              }
+              onEditorStateChange={setEditorState}
+              toolbar={{
+                options: props.readOnly ? [] : ["inline", "history"],
+                inline: {
+                  options: props.readOnly
+                    ? []
+                    : ["bold", "italic", "underline"],
+                },
+              }}
+            />
+          </Grid>
+          <ChractersPerLine editorState={editorState} />
+        </Grid>
         {props.readOnly && props.subtitle.note ? (
           <Alert severity="info">{props.subtitle.note}</Alert>
         ) : null}
         {!props.readOnly ? (
           <CardActions>
-            <AddNote index={props.index} note={props.subtitle.note} />
-            <AddBox
-              index={props.index}
-              subtitleCount={props.subtitleCount}
-              end_time={props.subtitle.end_time}
-            />
+            <Grid
+              container
+              direction="row"
+              justifyContent="space-between"
+              alignItems="center"
+            >
+              <Grid
+                container
+                direction="row"
+                justifyContent="flex-start"
+                alignItems="center"
+                item
+                xs
+              >
+                <AddNote index={props.index} note={props.subtitle.note} />
+                <AddBox
+                  index={props.index}
+                  subtitleCount={props.subtitleCount}
+                  end_time={time.end}
+                />
+                {chractersPerSecond}
+              </Grid>
+              <DeleteBox index={props.index} />
+            </Grid>
           </CardActions>
         ) : null}
       </CardContent>
+    ),
+    [
+      chractersPerSecond,
+      dispatch,
+      editorState,
+      props.index,
+      props.readOnly,
+      props.subtitle.end_time,
+      props.subtitle.note,
+      props.subtitle.start_time,
+      props.subtitleCount,
+      time,
+    ]
+  );
+
+  return (
+    <Card
+      raised={raised}
+      sx={{
+        minWidth: 275,
+        height: 300,
+        margin: "20px",
+        borderRadius: 3,
+      }}
+    >
+      {cardContent}
     </Card>
   );
 }

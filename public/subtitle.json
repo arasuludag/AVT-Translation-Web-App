@@ -3,7 +3,7 @@
     "id": 0,
     "start_time": 3400,
     "end_time": 6177,
-    "text": "In this lesson, we're going to\nbe talking about finance. And",
+    "text": "<p><em>Lorem ipsum dolor</em> sit amet,</p><p>consectetur adipiscing elit.</p>",
     "note": "Sample note",
     "position": 1
   },
@@ -11,7 +11,7 @@
     "id": 1,
     "start_time": 6177,
     "end_time": 10000,
-    "text": "one of the most important aspects\nof finance is interest.",
+    "text": "<p>Suspendisse <strong>eu dictum</strong> elit,</p><p>eu dictum sem.</p>",
     "note": "",
     "position": 1
   },
@@ -19,15 +19,15 @@
     "id": 2,
     "start_time": 10000,
     "end_time": 13655,
-    "text": "When I go to a bank or some\nother lending institution",
-    "note": "",
+    "text": "<p>Aenean accumsan sit amet mi in ornare.</p>",
+    "note": "Google this etc.",
     "position": 1
   },
   {
     "id": 3,
     "start_time": 13655,
     "end_time": 17720,
-    "text": "to borrow money, the bank is happy\nto give me that money. But then I'm",
+    "text": "<p>Donec iaculis tortor tristique,</p>",
     "note": "",
     "position": 1
   },
@@ -35,7 +35,7 @@
     "id": 4,
     "start_time": 17900,
     "end_time": 21480,
-    "text": "going to be paying the bank for the\nprivilege of using their money. And that",
+    "text": "<p>tincidunt magna nec, commodo justo.</p>",
     "note": "",
     "position": 1
   },
@@ -43,7 +43,7 @@
     "id": 5,
     "start_time": 21660,
     "end_time": 26400,
-    "text": "amount of money that I pay the bank is\ncalled interest. Likewise, if I put money",
+    "text": "<p>Suspendisse sit amet feugiat ligula.</p>",
     "note": "",
     "position": 1
   },
@@ -51,7 +51,7 @@
     "id": 6,
     "start_time": 26600,
     "end_time": 31220,
-    "text": "in a savings account or I purchase a\ncertificate of deposit, the bank just",
+    "text": "<p>Maecenas odio dui, aliquet eget lacus at,</p>",
     "note": "",
     "position": 1
   },
@@ -59,7 +59,7 @@
     "id": 7,
     "start_time": 31300,
     "end_time": 35800,
-    "text": "doesn't put my money in a little box\nand leave it there until later. They take",
+    "text": "<p>consequat posuere neque.</p>",
     "note": "",
     "position": 1
   }
