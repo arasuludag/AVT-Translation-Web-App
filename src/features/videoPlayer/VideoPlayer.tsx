@@ -2,13 +2,8 @@ import { useEffect, useRef, useState } from "react";
 import { Player } from "react-tuby";
 import "react-tuby/css/main.css";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
-import {
-  selectActiveSubtitle,
-  selectSubtitles,
-  selectTranscript,
-  setActiveSubtitle,
-} from "../subtitleSection/subtitleSlice";
-import parse from "html-react-parser";
+import { setActiveSubtitle } from "../subtitleSection/subtitleSlice";
+
 import "./videoPlayer.css";
 
 import SubtitleToggle from "./SubtitleToggle";
@@ -16,13 +11,12 @@ import SeekBackOrForward from "./SeekBackOrForwardButtons";
 import ShowCurrentTime from "./ShowCurrentTime";
 import { selectVideoTime } from "./videoSlice";
 import { Box } from "@mui/material";
+import Subtitle from "./Subtitle";
+import Settings from "../settings/Settings";
 
 function VideoPlayer() {
   const dispatch = useAppDispatch();
   const videoTime = useAppSelector(selectVideoTime);
-  const activeSubtitle = useAppSelector(selectActiveSubtitle);
-  const subtitle = useAppSelector(selectSubtitles);
-  const transcript = useAppSelector(selectTranscript);
 
   const player = useRef<HTMLVideoElement>(null);
 
@@ -58,12 +52,6 @@ function VideoPlayer() {
     }
   }
 
-  function showSubtitle() {
-    if (activeSubtitle.whichOne === "original")
-      return parse(transcript[activeSubtitle.index]?.text || "");
-    else return parse(subtitle[activeSubtitle.index]?.text || "");
-  }
-
   return (
     <div className="container">
       <Player
@@ -74,7 +62,22 @@ function VideoPlayer() {
         seekDuration={0.03}
         keyboardShortcut={false}
       />
-      <div className="subtitle">{showSubtitle()}</div>
+      <Subtitle />
+      <Box
+        sx={{
+          position: "absolute",
+          bottom: "90%",
+          left: 0,
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          "& > *": {
+            m: 1,
+          },
+        }}
+      >
+        <Settings />
+      </Box>
       <Box
         sx={{
           position: "absolute",

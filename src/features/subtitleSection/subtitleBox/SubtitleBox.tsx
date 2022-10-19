@@ -66,7 +66,7 @@ function SubtitleBox(props: ChildComponentProps) {
     () => (
       <CardContent>
         <TextField
-          sx={{ width: "15ch", right: 15 }}
+          sx={{ width: "18ch", right: 15 }}
           id="outlined-number"
           label="Start"
           type="number"
@@ -91,9 +91,9 @@ function SubtitleBox(props: ChildComponentProps) {
             setTime({ ...time, ...{ start: parseInt(event.target.value) } });
           }}
         />
-        <GoToSecondButton ms={time.start} />
+        <GoToSecondButton ms={time.start} readOnly={props.readOnly} />
         <TextField
-          sx={{ width: "15ch", left: 15 }}
+          sx={{ width: "18ch", left: 15 }}
           id="outlined-number"
           label="End"
           type="number"

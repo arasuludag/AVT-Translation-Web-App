@@ -1,8 +1,12 @@
 import { Chip, Grid } from "@mui/material";
 import { EditorState } from "draft-js";
 import { useMemo } from "react";
+import { useAppSelector } from "../../../app/hooks";
+import { selectCPL } from "../../settings/settingsSlice";
 
 export default function CharacterPerLine(props: { editorState: EditorState }) {
+  const recievedCPL = useAppSelector(selectCPL);
+
   const characterPerLine = useMemo(
     () =>
       props.editorState
@@ -12,8 +16,8 @@ export default function CharacterPerLine(props: { editorState: EditorState }) {
         .map((line, index) => {
           const lineLength = line.length;
           let color = "Gainsboro";
-          if (lineLength > 44) color = "Maroon";
-          else if (lineLength > 29) color = "Wheat";
+          if (lineLength >= recievedCPL + 15) color = "Maroon";
+          else if (lineLength >= recievedCPL) color = "Wheat";
           return (
             <Chip
               key={index}
@@ -24,7 +28,7 @@ export default function CharacterPerLine(props: { editorState: EditorState }) {
             />
           );
         }),
-    [props.editorState]
+    [props.editorState, recievedCPL]
   );
 
   return (

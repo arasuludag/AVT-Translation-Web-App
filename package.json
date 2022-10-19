@@ -1,5 +1,6 @@
 {
   "name": "translation-app",
+  "homepage": "https://arasuludag.github.io/AVT-App",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -19,6 +20,7 @@
     "draft-js": "^0.11.7",
     "draft-js-export-html": "^1.4.1",
     "draft-js-import-html": "^1.4.1",
+    "gh-pages": "^4.0.0",
     "html-react-parser": "^3.0.4",
     "lodash.debounce": "^4.0.8",
     "react": "^18.2.0",
@@ -28,6 +30,7 @@
     "react-redux": "^8.0.4",
     "react-scripts": "5.0.1",
     "react-tuby": "^0.1.24",
+    "save-dev": "^0.0.1-security",
     "typescript": "^4.8.4",
     "web-vitals": "^2.1.4"
   },
@@ -35,7 +38,9 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build"
   },
   "eslintConfig": {
     "extends": [
