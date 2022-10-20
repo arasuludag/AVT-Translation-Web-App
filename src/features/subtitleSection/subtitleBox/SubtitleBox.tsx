@@ -66,7 +66,7 @@ function SubtitleBox(props: ChildComponentProps) {
     () => (
       <CardContent>
         <TextField
-          sx={{ width: "18ch", right: 15 }}
+          sx={{ width: "20ch", margin: 1 }}
           id="outlined-number"
           label="Start"
           type="number"
@@ -88,12 +88,17 @@ function SubtitleBox(props: ChildComponentProps) {
                 index: props.index,
               })
             );
-            setTime({ ...time, ...{ start: parseInt(event.target.value) } });
+            setTime({
+              ...time,
+              ...{ start: parseInt(event.target.value) },
+            });
           }}
         />
+
         <GoToSecondButton ms={time.start} readOnly={props.readOnly} />
+
         <TextField
-          sx={{ width: "18ch", left: 15 }}
+          sx={{ width: "20ch", margin: 1 }}
           id="outlined-number"
           label="End"
           type="number"
@@ -118,6 +123,7 @@ function SubtitleBox(props: ChildComponentProps) {
             setTime({ ...time, ...{ end: parseInt(event.target.value) } });
           }}
         />
+
         <Grid container>
           <Grid item xs={10}>
             <Editor
@@ -201,7 +207,7 @@ function SubtitleBox(props: ChildComponentProps) {
       raised={raised}
       sx={{
         minWidth: 275,
-        height: 300,
+        minHeight: 350,
         margin: "20px",
         borderRadius: 3,
       }}

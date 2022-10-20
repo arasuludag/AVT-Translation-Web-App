@@ -6,7 +6,11 @@ import {
 } from "../subtitleSection/subtitleSlice";
 import parse from "html-react-parser";
 
-export default function ShowSubtitle() {
+interface ShownSubtitle {
+  playerWidth: number;
+}
+
+export default function ShowSubtitle(props: ShownSubtitle) {
   const activeSubtitle = useAppSelector(selectActiveSubtitle);
   const subtitle = useAppSelector(selectSubtitles);
   const transcript = useAppSelector(selectTranscript);
@@ -32,6 +36,7 @@ export default function ShowSubtitle() {
       className="subtitle"
       style={{
         top: scale(showSubtitle()?.position || 1, 1, 10, 80, 10) + "%",
+        fontSize: props.playerWidth / 30,
       }}
     >
       {parse(showSubtitle()?.text || "")}

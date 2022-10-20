@@ -1,6 +1,9 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RootState } from "../../app/store";
 
+import Transcript from "./subtitle.json";
+import WorkingOnSubtitle from "./subtitleWorkingOn.json";
+
 export interface Subtitle {
   id: number;
   start_time: number;
@@ -114,18 +117,20 @@ export const subtitleSlice = createSlice({
 export const fetchSubtitle = createAsyncThunk(
   "subtitle/fetchSubtitle",
   async (subtitleID: string) => {
-    const response = await fetch("/subtitleWorkingOn.json");
+    // When connected to the backend.
+    // const response = await fetch("");
 
-    return response.json();
+    return WorkingOnSubtitle;
   }
 );
 
 export const fetchOriginalTranscript = createAsyncThunk(
   "subtitle/fetchOriginalTranscript",
   async (subtitleID: string) => {
-    const response = await fetch("/subtitle.json");
+    // When connected to the backend.
+    // const response = await fetch("");
 
-    return response.json();
+    return Transcript;
   }
 );
 

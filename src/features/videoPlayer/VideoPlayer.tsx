@@ -14,6 +14,9 @@ import { Box } from "@mui/material";
 import Subtitle from "./Subtitle";
 import Settings from "../settings/Settings";
 
+// @ts-ignore
+import video from "./video.mp4"; // Will be fetched from the backend on the real thing.
+
 function VideoPlayer() {
   const dispatch = useAppDispatch();
   const videoTime = useAppSelector(selectVideoTime);
@@ -54,19 +57,11 @@ function VideoPlayer() {
 
   return (
     <div className="container">
-      <Player
-        src="/video.mp4"
-        playerRef={player}
-        pictureInPicture={false}
-        primaryColor={"#2196f3"}
-        seekDuration={0.03}
-        keyboardShortcut={false}
-      />
-      <Subtitle />
       <Box
         sx={{
           position: "absolute",
-          bottom: "90%",
+          top: 10,
+          zIndex: 3,
           left: 0,
           display: "flex",
           flexDirection: "column",
@@ -81,9 +76,10 @@ function VideoPlayer() {
       <Box
         sx={{
           position: "absolute",
-          top: "60%",
-          right: "0%",
+          right: 0,
           display: "flex",
+          zIndex: 3,
+          bottom: 50,
           flexDirection: "column",
           alignItems: "center",
           "& > *": {
@@ -97,6 +93,15 @@ function VideoPlayer() {
         />
         <ShowCurrentTime currentTime={currentTime} />
       </Box>
+      <Player
+        src={video}
+        playerRef={player}
+        pictureInPicture={false}
+        primaryColor={"#2196f3"}
+        seekDuration={0.03}
+        keyboardShortcut={false}
+      />
+      <Subtitle playerWidth={player.current?.offsetWidth || 32} />
     </div>
   );
 }

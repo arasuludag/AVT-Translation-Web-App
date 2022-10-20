@@ -18,7 +18,12 @@ export default function GoToSecondButton(props: {
   };
 
   return (
-    <Button onClick={handleClick} size="small" className="goToSecondButton">
+    <Button
+      onClick={handleClick}
+      size="small"
+      className="goToSecondButton"
+      sx={{ margin: 1 }}
+    >
       <PlayCircleFilledWhiteIcon />
     </Button>
   );
