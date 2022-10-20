@@ -65,65 +65,71 @@ function SubtitleBox(props: ChildComponentProps) {
   const cardContent = useMemo(
     () => (
       <CardContent>
-        <TextField
-          sx={{ width: "20ch", margin: 1 }}
-          id="outlined-number"
-          label="Start"
-          type="number"
-          defaultValue={props.subtitle.start_time}
-          InputLabelProps={{
-            shrink: true,
-          }}
-          InputProps={{
-            endAdornment: <InputAdornment position="end">ms</InputAdornment>,
-          }}
-          disabled={props.readOnly}
-          size="small"
-          onChange={(event) => {
-            dispatch(
-              insertToSubtitle({
-                subtitle: {
-                  start_time: parseInt(event.target.value),
-                },
-                index: props.index,
-              })
-            );
-            setTime({
-              ...time,
-              ...{ start: parseInt(event.target.value) },
-            });
-          }}
-        />
-
-        <GoToSecondButton ms={time.start} readOnly={props.readOnly} />
-
-        <TextField
-          sx={{ width: "20ch", margin: 1 }}
-          id="outlined-number"
-          label="End"
-          type="number"
-          defaultValue={props.subtitle.end_time}
-          InputLabelProps={{
-            shrink: true,
-          }}
-          InputProps={{
-            endAdornment: <InputAdornment position="end">ms</InputAdornment>,
-          }}
-          disabled={props.readOnly}
-          size="small"
-          onChange={(event) => {
-            dispatch(
-              insertToSubtitle({
-                subtitle: {
-                  end_time: parseInt(event.target.value),
-                },
-                index: props.index,
-              })
-            );
-            setTime({ ...time, ...{ end: parseInt(event.target.value) } });
-          }}
-        />
-
+        <Grid
+          container
+          direction="row"
+          justifyContent="center"
+          alignItems="center"
+        >
+          <TextField
+            sx={{ width: "16ch", margin: 1 }}
+            id="outlined-number"
+            label="Start"
+            type="number"
+            defaultValue={props.subtitle.start_time}
+            InputLabelProps={{
+              shrink: true,
+            }}
+            InputProps={{
+              endAdornment: <InputAdornment position="end">ms</InputAdornment>,
+            }}
+            disabled={props.readOnly}
+            size="small"
+            onChange={(event) => {
+              dispatch(
+                insertToSubtitle({
+                  subtitle: {
+                    start_time: parseInt(event.target.value),
+                  },
+                  index: props.index,
+                })
+              );
+              setTime({
+                ...time,
+                ...{ start: parseInt(event.target.value) },
+              });
+            }}
+          />
+          <Grid item xs={12} md={2} xl={2}>
+            <GoToSecondButton ms={time.start} readOnly={props.readOnly} />
+          </Grid>
+          <TextField
+            sx={{ width: "16ch", margin: 1 }}
+            id="outlined-number"
+            label="End"
+            type="number"
+            defaultValue={props.subtitle.end_time}
+            InputLabelProps={{
+              shrink: true,
+            }}
+            InputProps={{
+              endAdornment: <InputAdornment position="end">ms</InputAdornment>,
+            }}
+            disabled={props.readOnly}
+            size="small"
+            onChange={(event) => {
+              dispatch(
+                insertToSubtitle({
+                  subtitle: {
+                    end_time: parseInt(event.target.value),
+                  },
+                  index: props.index,
+                })
+              );
+              setTime({ ...time, ...{ end: parseInt(event.target.value) } });
+            }}
+          />
+        </Grid>
         <Grid container>
           <Grid item xs={10}>
             <Editor
@@ -132,6 +138,7 @@ function SubtitleBox(props: ChildComponentProps) {
               toolbarClassName="toolbarClassName"
               wrapperClassName="wrapperClassName"
               editorClassName="editorClassName"
+              spellCheck
               onChange={() =>
                 dispatch(
                   insertToSubtitle({
@@ -206,10 +213,8 @@ function SubtitleBox(props: ChildComponentProps) {
     <Card
       raised={raised}
       sx={{
-        minWidth: 275,
-        minHeight: 350,
-        margin: "20px",
-        borderRadius: 3,
+        minHeight: 330,
+        margin: "0 10px 10px 10px",
       }}
     >
       {cardContent}

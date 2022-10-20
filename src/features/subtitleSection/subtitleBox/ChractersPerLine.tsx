@@ -23,7 +23,7 @@ export default function CharacterPerLine(props: { editorState: EditorState }) {
               key={index}
               label={line.length}
               variant="outlined"
-              sx={{ margin: "2px 0" }}
+              sx={{ margin: "2px 0", opacity: "50%" }}
               style={{ color: color, borderColor: color }}
             />
           );
@@ -36,7 +36,7 @@ export default function CharacterPerLine(props: { editorState: EditorState }) {
       item
       xs={2}
       sx={{
-        top: 40,
+        top: 50,
         display: "flex",
         flexDirection: "column",
         alignItems: "center",

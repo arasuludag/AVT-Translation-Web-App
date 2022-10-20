@@ -17,7 +17,7 @@ import Settings from "../settings/Settings";
 // @ts-ignore
 import video from "./video.mp4"; // Will be fetched from the backend on the real thing.
 
-function VideoPlayer() {
+function VideoPlayer(): JSX.Element {
   const dispatch = useAppDispatch();
   const videoTime = useAppSelector(selectVideoTime);
 

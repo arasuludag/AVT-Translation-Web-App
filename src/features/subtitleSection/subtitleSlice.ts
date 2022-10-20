@@ -17,14 +17,16 @@ export interface SubtitleFetch {
   transcriptData: Subtitle[];
   workingOndata: Subtitle[];
   subtitleToDisplay: { whichOne: "original" | "workingOn"; index: number };
-  status: "idle" | "loading" | "failed";
+  transcriptStatus: "idle" | "loading" | "failed";
+  workingOnSubtitleStatus: "idle" | "loading" | "failed";
 }
 
 const initialState: SubtitleFetch = {
   transcriptData: [],
   workingOndata: [],
   subtitleToDisplay: { whichOne: "original", index: -1 },
-  status: "idle",
+  transcriptStatus: "idle",
+  workingOnSubtitleStatus: "idle",
 };
 
 export const subtitleSlice = createSlice({
@@ -92,24 +94,24 @@ export const subtitleSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(fetchSubtitle.pending, (state) => {
-        state.status = "loading";
+        state.workingOnSubtitleStatus = "loading";
       })
       .addCase(fetchSubtitle.fulfilled, (state, action) => {
-        state.status = "idle";
+        state.workingOnSubtitleStatus = "idle";
         state.workingOndata = action.payload;
       })
       .addCase(fetchSubtitle.rejected, (state) => {
-        state.status = "failed";
+        state.workingOnSubtitleStatus = "failed";
       })
       .addCase(fetchOriginalTranscript.pending, (state) => {
-        state.status = "loading";
+        state.transcriptStatus = "loading";
       })
       .addCase(fetchOriginalTranscript.fulfilled, (state, action) => {
-        state.status = "idle";
+        state.transcriptStatus = "idle";
         state.transcriptData = action.payload;
       })
       .addCase(fetchOriginalTranscript.rejected, (state) => {
-        state.status = "failed";
+        state.transcriptStatus = "failed";
       });
   },
 });

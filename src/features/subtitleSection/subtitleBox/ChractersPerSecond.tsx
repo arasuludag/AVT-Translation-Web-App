@@ -9,7 +9,7 @@ export default function CharacterPerSecond(props: {
   time: { start: number; end: number };
 }) {
   const [cps, setCPS] = useState<number>(0);
-  const [color, setcolor] = useState("white");
+  const [color, setcolor] = useState("Gainsboro");
 
   const recievedCPS = useAppSelector(selectCPS);
 
@@ -31,7 +31,7 @@ export default function CharacterPerSecond(props: {
     <Chip
       label={Math.round(cps)}
       variant="outlined"
-      sx={{ margin: "2px 0" }}
+      sx={{ margin: "2px 0", opacity: "50%" }}
       style={{ color: color, borderColor: color }}
       title="Chracters per second"
     />
