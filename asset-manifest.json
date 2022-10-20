@@ -1,15 +1,16 @@
 {
   "files": {
     "main.css": "/Audiovisual-Translation-Web-App/static/css/main.214a4c8a.css",
-    "main.js": "/Audiovisual-Translation-Web-App/static/js/main.21003b09.js",
+    "main.js": "/Audiovisual-Translation-Web-App/static/js/main.b77f4fa7.js",
     "static/js/787.d8c2ac8a.chunk.js": "/Audiovisual-Translation-Web-App/static/js/787.d8c2ac8a.chunk.js",
+    "static/media/video.mp4": "/Audiovisual-Translation-Web-App/static/media/video.31fdf7b24c65de31f6dc.mp4",
     "index.html": "/Audiovisual-Translation-Web-App/index.html",
     "main.214a4c8a.css.map": "/Audiovisual-Translation-Web-App/static/css/main.214a4c8a.css.map",
-    "main.21003b09.js.map": "/Audiovisual-Translation-Web-App/static/js/main.21003b09.js.map",
+    "main.b77f4fa7.js.map": "/Audiovisual-Translation-Web-App/static/js/main.b77f4fa7.js.map",
     "787.d8c2ac8a.chunk.js.map": "/Audiovisual-Translation-Web-App/static/js/787.d8c2ac8a.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.214a4c8a.css",
-    "static/js/main.21003b09.js"
+    "static/js/main.b77f4fa7.js"
   ]
 }
