@@ -1,7 +1,7 @@
-import { Button } from "@mui/material";
 import { useAppDispatch } from "../../../app/hooks";
 import { insertBox } from "../subtitleSlice";
 import AddBoxIcon from "@mui/icons-material/AddBox";
+import { IconButton } from "@mui/material";
 
 export default function AddNote(props: {
   index: number;
@@ -21,8 +21,8 @@ export default function AddNote(props: {
   };
 
   return (
-    <Button onClick={handleClick} size="small">
+    <IconButton onClick={handleClick} title={"Add box below."}>
       <AddBoxIcon />
-    </Button>
+    </IconButton>
   );
 }

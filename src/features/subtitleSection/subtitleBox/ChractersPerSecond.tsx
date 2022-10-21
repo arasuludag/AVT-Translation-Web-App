@@ -9,7 +9,7 @@ export default function CharacterPerSecond(props: {
   time: { start: number; end: number };
 }) {
   const [cps, setCPS] = useState<number>(0);
-  const [color, setcolor] = useState("Gainsboro");
+  const [color, setcolor] = useState<string | undefined>("Gainsboro");
 
   const recievedCPS = useAppSelector(selectCPS);
 
@@ -18,21 +18,22 @@ export default function CharacterPerSecond(props: {
     .getPlainText().length;
 
   useEffect(() => {
-    setCPS(totalBoxLength / ((props.time.end - props.time.start) / 1000));
+    // If "|| 0" isn't there, it causes a NaN on some edge cases.
+    setCPS(totalBoxLength / ((props.time.end - props.time.start) / 1000) || 0);
   }, [props, totalBoxLength]);
 
   useEffect(() => {
-    setcolor("Gainsboro");
+    setcolor(undefined);
     if (cps >= recievedCPS + 3) setcolor("Maroon");
-    else if (cps >= recievedCPS) setcolor("Wheat");
+    else if (cps >= recievedCPS) setcolor("DarkGoldenRod");
   }, [cps, recievedCPS]);
 
   return (
     <Chip
       label={Math.round(cps)}
-      variant="outlined"
-      sx={{ margin: "2px 0", opacity: "50%" }}
-      style={{ color: color, borderColor: color }}
+      variant="filled"
+      sx={{ margin: "0 5px", opacity: "50%" }}
+      style={{ backgroundColor: color }}
       title="Chracters per second"
     />
   );

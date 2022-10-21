@@ -97,7 +97,7 @@ function VideoPlayer(): JSX.Element {
         src={video}
         playerRef={player}
         pictureInPicture={false}
-        primaryColor={"#2196f3"}
+        primaryColor={"#FFFFFF"}
         seekDuration={0.03}
         keyboardShortcut={false}
       />

@@ -9,6 +9,9 @@ import SubtitleSection from "./features/subtitleSection/SubtitleSection";
 const darkTheme = createTheme({
   palette: {
     mode: "dark",
+    primary: {
+      main: "#FFFFFF",
+    },
   },
 });
 

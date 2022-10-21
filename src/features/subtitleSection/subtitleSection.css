@@ -5,9 +5,10 @@
 }
 
 .wrapperClassName {
-  height: 180px;
+  min-height: 180px;
 }
 
 .editorClassName {
   overflow: hidden;
+  min-height: 120px;
 }

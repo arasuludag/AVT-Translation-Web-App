@@ -6,7 +6,13 @@ import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
 import SettingsIcon from "@mui/icons-material/Settings";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
-import { selectCPL, selectCPS, setSettings } from "./settingsSlice";
+import {
+  selectCPL,
+  selectCPS,
+  selectSeekAmount,
+  setBoxSettings,
+  setVideoSettings,
+} from "./settingsSlice";
 import { Grid, Slider, Typography } from "@mui/material";
 
 export default function Settings() {
@@ -14,6 +20,7 @@ export default function Settings() {
   const [open, setOpen] = React.useState(false);
   const cps = useAppSelector(selectCPS);
   const cpl = useAppSelector(selectCPL);
+  const seekAmount = useAppSelector(selectSeekAmount);
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -30,7 +37,7 @@ export default function Settings() {
       </Button>
       <Dialog open={open} onClose={handleClose}>
         <DialogTitle id="alert-dialog-title">{"Settings"}</DialogTitle>
-        <DialogContent>
+        <DialogContent sx={{ height: "250px", overflowX: "hidden" }}>
           <Grid container>
             <Grid
               item
@@ -47,10 +54,10 @@ export default function Settings() {
                 defaultValue={cpl}
                 onChange={(event, value) => {
                   if (typeof value === "number")
-                    dispatch(setSettings({ cpl: value }));
+                    dispatch(setBoxSettings({ cpl: value }));
                 }}
                 aria-label="Default"
-                valueLabelDisplay="auto"
+                valueLabelDisplay="on"
                 step={1}
                 min={15}
                 max={45}
@@ -60,7 +67,7 @@ export default function Settings() {
               item
               container
               xs
-              sx={{ width: 450, height: 50 }}
+              sx={{ width: 450, height: 100 }}
               direction="row"
               justifyContent="space-between"
               alignItems="center"
@@ -71,14 +78,38 @@ export default function Settings() {
                 defaultValue={cps}
                 onChange={(event, value) => {
                   if (typeof value === "number")
-                    dispatch(setSettings({ cps: value }));
+                    dispatch(setBoxSettings({ cps: value }));
                 }}
                 aria-label="Default"
-                valueLabelDisplay="auto"
+                valueLabelDisplay="on"
                 step={1}
                 min={10}
                 max={25}
               />
+              <Grid
+                item
+                container
+                xs
+                sx={{ width: 450, height: 100 }}
+                direction="row"
+                justifyContent="space-between"
+                alignItems="center"
+              >
+                <Typography gutterBottom>Forward / Reverse Amount: </Typography>
+                <Slider
+                  sx={{ width: 300 }}
+                  defaultValue={seekAmount}
+                  onChange={(event, value) => {
+                    if (typeof value === "number")
+                      dispatch(setVideoSettings({ seekAmount: value }));
+                  }}
+                  aria-label="Default"
+                  valueLabelDisplay="on"
+                  step={10}
+                  min={20}
+                  max={1000}
+                />
+              </Grid>
             </Grid>
           </Grid>
         </DialogContent>

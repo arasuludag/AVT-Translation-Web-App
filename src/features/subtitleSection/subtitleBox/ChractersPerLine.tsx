@@ -15,16 +15,16 @@ export default function CharacterPerLine(props: { editorState: EditorState }) {
         .split("\n")
         .map((line, index) => {
           const lineLength = line.length;
-          let color = "Gainsboro";
+          let color = undefined;
           if (lineLength >= recievedCPL + 15) color = "Maroon";
-          else if (lineLength >= recievedCPL) color = "Wheat";
+          else if (lineLength >= recievedCPL) color = "DarkGoldenRod";
           return (
             <Chip
               key={index}
               label={line.length}
-              variant="outlined"
+              variant="filled"
               sx={{ margin: "2px 0", opacity: "50%" }}
-              style={{ color: color, borderColor: color }}
+              style={{ backgroundColor: color }}
             />
           );
         }),
@@ -36,11 +36,10 @@ export default function CharacterPerLine(props: { editorState: EditorState }) {
       item
       xs={2}
       sx={{
-        top: 50,
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
-        margin: "60px 0 0 0",
+        margin: "58px 0 0 0",
       }}
     >
       {characterPerLine}

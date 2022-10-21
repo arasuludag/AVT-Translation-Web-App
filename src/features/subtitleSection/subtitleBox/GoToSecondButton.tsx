@@ -1,5 +1,5 @@
 import PlayCircleFilledWhiteIcon from "@mui/icons-material/PlayCircleFilledWhite";
-import { Button } from "@mui/material";
+import { IconButton } from "@mui/material";
 import { useAppDispatch } from "../../../app/hooks";
 import { setVideoTime } from "../../videoPlayer/videoSlice";
 import { setSubtitleToDisplay } from "../subtitleSlice";
@@ -18,13 +18,13 @@ export default function GoToSecondButton(props: {
   };
 
   return (
-    <Button
+    <IconButton
       onClick={handleClick}
-      size="small"
+      title={"Go to " + props.ms}
       className="goToSecondButton"
       sx={{ margin: 1 }}
     >
       <PlayCircleFilledWhiteIcon />
-    </Button>
+    </IconButton>
   );
 }
