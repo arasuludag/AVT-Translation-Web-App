@@ -1,16 +1,16 @@
 {
   "files": {
-    "main.css": "/Audiovisual-Translation-Web-App/static/css/main.b1d5c836.css",
-    "main.js": "/Audiovisual-Translation-Web-App/static/js/main.d494f882.js",
+    "main.css": "/Audiovisual-Translation-Web-App/static/css/main.f2e45590.css",
+    "main.js": "/Audiovisual-Translation-Web-App/static/js/main.41ef513e.js",
     "static/js/787.d8c2ac8a.chunk.js": "/Audiovisual-Translation-Web-App/static/js/787.d8c2ac8a.chunk.js",
     "static/media/video.mp4": "/Audiovisual-Translation-Web-App/static/media/video.31fdf7b24c65de31f6dc.mp4",
     "index.html": "/Audiovisual-Translation-Web-App/index.html",
-    "main.b1d5c836.css.map": "/Audiovisual-Translation-Web-App/static/css/main.b1d5c836.css.map",
-    "main.d494f882.js.map": "/Audiovisual-Translation-Web-App/static/js/main.d494f882.js.map",
+    "main.f2e45590.css.map": "/Audiovisual-Translation-Web-App/static/css/main.f2e45590.css.map",
+    "main.41ef513e.js.map": "/Audiovisual-Translation-Web-App/static/js/main.41ef513e.js.map",
     "787.d8c2ac8a.chunk.js.map": "/Audiovisual-Translation-Web-App/static/js/787.d8c2ac8a.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.b1d5c836.css",
-    "static/js/main.d494f882.js"
+    "static/css/main.f2e45590.css",
+    "static/js/main.41ef513e.js"
   ]
 }
