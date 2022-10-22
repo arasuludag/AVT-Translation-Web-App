@@ -6,13 +6,11 @@ import { setActiveSubtitle } from "../subtitleSection/subtitleSlice";
 
 import "./videoPlayer.css";
 
-import SubtitleToggle from "./SubtitleToggle";
-import SeekBackOrForward from "./SeekBackOrForwardButtons";
-import ShowCurrentTime from "./ShowCurrentTime";
 import { selectVideoTime } from "./videoSlice";
 import { Box } from "@mui/material";
 import Subtitle from "./Subtitle";
 import Settings from "../settings/Settings";
+import VideoControl from "./controlGroup/VideoControl";
 
 // @ts-ignore
 import video from "./video.mp4"; // Will be fetched from the backend on the real thing.
@@ -63,36 +61,16 @@ function VideoPlayer(): JSX.Element {
           top: 10,
           zIndex: 3,
           left: 0,
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-          "& > *": {
-            m: 1,
-          },
+          margin: 1,
         }}
       >
         <Settings />
       </Box>
-      <Box
-        sx={{
-          position: "absolute",
-          right: 0,
-          display: "flex",
-          zIndex: 3,
-          bottom: 50,
-          flexDirection: "column",
-          alignItems: "center",
-          "& > *": {
-            m: 1,
-          },
-        }}
-      >
-        <SubtitleToggle currentTime={currentTime} />
-        <SeekBackOrForward
-          onSeek={(direction, howMuch) => onSeek(direction, howMuch)}
-        />
-        <ShowCurrentTime currentTime={currentTime} />
-      </Box>
+      <VideoControl
+        currentTime={currentTime}
+        onSeek={(direction, howMuch) => onSeek(direction, howMuch)}
+      />
+
       <Player
         src={video}
         playerRef={player}
@@ -101,6 +79,7 @@ function VideoPlayer(): JSX.Element {
         seekDuration={0.03}
         keyboardShortcut={false}
       />
+
       <Subtitle playerWidth={player.current?.offsetWidth || 32} />
     </div>
   );

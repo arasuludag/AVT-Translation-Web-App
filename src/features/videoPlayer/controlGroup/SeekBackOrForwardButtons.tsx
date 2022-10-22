@@ -3,8 +3,8 @@ import ButtonGroup from "@mui/material/ButtonGroup";
 import Box from "@mui/material/Box";
 import RestoreIcon from "@mui/icons-material/Restore";
 import UpdateIcon from "@mui/icons-material/Update";
-import { useAppSelector } from "../../app/hooks";
-import { selectSeekAmount } from "../settings/settingsSlice";
+import { useAppSelector } from "../../../app/hooks";
+import { selectSeekAmount } from "../../settings/settingsSlice";
 
 interface Seek {
   onSeek(direction: boolean, howMuch: number): void;
@@ -21,7 +21,6 @@ export default function SeekBackOrForward(props: Seek) {
     <Box
       sx={{
         display: "flex",
-        color: "white",
         flexDirection: "column",
         alignItems: "center",
         "& > *": {
@@ -30,16 +29,10 @@ export default function SeekBackOrForward(props: Seek) {
       }}
     >
       <ButtonGroup variant="outlined">
-        <Button
-          style={{ color: "white", borderColor: "white", zIndex: 2 }}
-          onClick={() => handleClick(false)}
-        >
+        <Button style={{ zIndex: 2 }} onClick={() => handleClick(false)}>
           <RestoreIcon />
         </Button>
-        <Button
-          style={{ color: "white", borderColor: "white", zIndex: 2 }}
-          onClick={() => handleClick(true)}
-        >
+        <Button style={{ zIndex: 2 }} onClick={() => handleClick(true)}>
           <UpdateIcon />
         </Button>
       </ButtonGroup>

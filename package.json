@@ -23,6 +23,7 @@
     "gh-pages": "^4.0.0",
     "html-react-parser": "^3.0.4",
     "lodash.debounce": "^4.0.8",
+    "notistack": "^2.0.8",
     "react": "^18.2.0",
     "react-beautiful-dnd": "^13.1.1",
     "react-dom": "^18.2.0",

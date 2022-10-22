@@ -1,10 +1,10 @@
 import { ToggleButton, ToggleButtonGroup } from "@mui/material";
-import { useAppDispatch, useAppSelector } from "../../app/hooks";
+import { useAppDispatch, useAppSelector } from "../../../app/hooks";
 import {
   selectActiveSubtitle,
   setActiveSubtitle,
   setSubtitleToDisplay,
-} from "../subtitleSection/subtitleSlice";
+} from "../../subtitleSection/subtitleSlice";
 import AlignHorizontalRightIcon from "@mui/icons-material/AlignHorizontalRight";
 import AlignHorizontalLeftIcon from "@mui/icons-material/AlignHorizontalLeft";
 
@@ -36,6 +36,7 @@ export default function SubtitleToggle(props: { currentTime: number }) {
       onChange={handleChange}
       exclusive
       size="small"
+      color="primary"
     >
       {children}
     </ToggleButtonGroup>

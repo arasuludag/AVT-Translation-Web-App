@@ -10,10 +10,19 @@ import {
   selectCPL,
   selectCPS,
   selectSeekAmount,
+  selectTheme,
   setBoxSettings,
+  setTheme,
   setVideoSettings,
 } from "./settingsSlice";
-import { Grid, Slider, Typography } from "@mui/material";
+import {
+  FormControlLabel,
+  Grid,
+  Slider,
+  Stack,
+  Switch,
+  Typography,
+} from "@mui/material";
 
 export default function Settings() {
   const dispatch = useAppDispatch();
@@ -21,6 +30,7 @@ export default function Settings() {
   const cps = useAppSelector(selectCPS);
   const cpl = useAppSelector(selectCPL);
   const seekAmount = useAppSelector(selectSeekAmount);
+  const theme = useAppSelector(selectTheme);
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -32,86 +42,69 @@ export default function Settings() {
 
   return (
     <div>
-      <Button sx={{ color: "white" }} onClick={handleClickOpen}>
+      <Button onClick={handleClickOpen}>
         <SettingsIcon />
       </Button>
       <Dialog open={open} onClose={handleClose}>
-        <DialogTitle id="alert-dialog-title">{"Settings"}</DialogTitle>
-        <DialogContent sx={{ height: "250px", overflowX: "hidden" }}>
-          <Grid container>
-            <Grid
-              item
-              container
-              xs
-              sx={{ width: 450, height: 100 }}
-              direction="row"
-              justifyContent="space-between"
-              alignItems="center"
-            >
-              <Typography gutterBottom>Chracter per Line: </Typography>
-              <Slider
-                sx={{ width: 300 }}
-                defaultValue={cpl}
-                onChange={(event, value) => {
-                  if (typeof value === "number")
-                    dispatch(setBoxSettings({ cpl: value }));
-                }}
-                aria-label="Default"
-                valueLabelDisplay="on"
-                step={1}
-                min={15}
-                max={45}
-              />
-            </Grid>
-            <Grid
-              item
-              container
-              xs
-              sx={{ width: 450, height: 100 }}
-              direction="row"
-              justifyContent="space-between"
-              alignItems="center"
-            >
-              <Typography gutterBottom>Chracter per Second: </Typography>
-              <Slider
-                sx={{ width: 300 }}
-                defaultValue={cps}
-                onChange={(event, value) => {
-                  if (typeof value === "number")
-                    dispatch(setBoxSettings({ cps: value }));
-                }}
-                aria-label="Default"
-                valueLabelDisplay="on"
-                step={1}
-                min={10}
-                max={25}
-              />
-              <Grid
-                item
-                container
-                xs
-                sx={{ width: 450, height: 100 }}
-                direction="row"
-                justifyContent="space-between"
-                alignItems="center"
-              >
-                <Typography gutterBottom>Forward / Reverse Amount: </Typography>
-                <Slider
-                  sx={{ width: 300 }}
-                  defaultValue={seekAmount}
-                  onChange={(event, value) => {
-                    if (typeof value === "number")
-                      dispatch(setVideoSettings({ seekAmount: value }));
-                  }}
-                  aria-label="Default"
-                  valueLabelDisplay="on"
-                  step={10}
-                  min={20}
-                  max={1000}
+        <DialogTitle>Settings</DialogTitle>
+        <DialogContent>
+          <Stack spacing={2}>
+            <FormControlLabel
+              control={
+                <Switch
+                  sx={{ m: 1 }}
+                  defaultChecked={theme}
+                  onChange={(event, value) => dispatch(setTheme(value))}
                 />
-              </Grid>
-            </Grid>
-          </Grid>
+              }
+              label="Theme"
+            />
+
+            <Typography gutterBottom>CPL: </Typography>
+            <Slider
+              sx={{ width: 300 }}
+              defaultValue={cpl}
+              onChange={(event, value) => {
+                if (typeof value === "number")
+                  dispatch(setBoxSettings({ cpl: value }));
+              }}
+              aria-label="Default"
+              valueLabelDisplay="auto"
+              step={1}
+              min={15}
+              max={45}
+            />
+
+            <Typography gutterBottom>CPS: </Typography>
+            <Slider
+              sx={{ width: 300 }}
+              defaultValue={cps}
+              onChange={(event, value) => {
+                if (typeof value === "number")
+                  dispatch(setBoxSettings({ cps: value }));
+              }}
+              aria-label="Default"
+              valueLabelDisplay="auto"
+              step={1}
+              min={10}
+              max={25}
+            />
+
+            <Typography gutterBottom>Seeking Amount: </Typography>
+            <Slider
+              sx={{ width: 300 }}
+              defaultValue={seekAmount}
+              onChange={(event, value) => {
+                if (typeof value === "number")
+                  dispatch(setVideoSettings({ seekAmount: value }));
+              }}
+              aria-label="Default"
+              valueLabelDisplay="auto"
+              step={10}
+              min={20}
+              max={1000}
+            />
+          </Stack>
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose}>Close</Button>

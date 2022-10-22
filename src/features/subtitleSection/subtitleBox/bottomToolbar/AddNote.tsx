@@ -1,12 +1,12 @@
-import { useAppDispatch } from "../../../app/hooks";
-import { insertToSubtitle } from "../subtitleSlice";
+import { useAppDispatch } from "../../../../app/hooks";
+import { insertToSubtitle } from "../../subtitleSlice";
 import { useState } from "react";
 import {
+  Alert,
   Button,
   Dialog,
   DialogActions,
   DialogContent,
-  DialogContentText,
   DialogTitle,
   IconButton,
   TextField,
@@ -14,15 +14,16 @@ import {
 } from "@mui/material";
 import ModeCommentIcon from "@mui/icons-material/ModeComment";
 import InsertCommentIcon from "@mui/icons-material/InsertComment";
+import { useSnackbar } from "notistack";
 
 export default function AddNote(props: { index: number; note: string }) {
   const dispatch = useAppDispatch();
-  const [displayedNote, setDisplayedNote] = useState(props.note);
   const [open, setOpen] = useState(false);
-  const [text, setText] = useState("");
+  const [text, setText] = useState(props.note);
+  const { enqueueSnackbar } = useSnackbar();
 
   const icon = () => {
-    if (displayedNote.length) return <InsertCommentIcon />;
+    if (text.length) return <InsertCommentIcon />;
     else return <ModeCommentIcon />;
   };
 
@@ -44,7 +45,9 @@ export default function AddNote(props: { index: number; note: string }) {
         index: props.index,
       })
     );
-    setDisplayedNote(text);
+    enqueueSnackbar(`Added this note: ${text}`, {
+      variant: "success",
+    });
   };
 
   return (
@@ -55,12 +58,13 @@ export default function AddNote(props: { index: number; note: string }) {
       <Dialog open={open} onClose={handleClose}>
         <DialogTitle>Comment / Note</DialogTitle>
 
-        <DialogContent>
-          <Typography>{displayedNote}</Typography>
+        <DialogContent sx={{ minWidth: "400px" }}>
+          <Typography>Preview:</Typography>
+          <Alert severity="info">{text}</Alert>
           <TextField
             autoFocus
             multiline
-            rows={4}
+            defaultValue={text}
             id="name"
             onChange={(event) => {
               setText(event.target.value);

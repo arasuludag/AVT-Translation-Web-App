@@ -1,7 +1,8 @@
-import { useAppDispatch } from "../../../app/hooks";
-import { insertBox } from "../subtitleSlice";
+import { useAppDispatch } from "../../../../app/hooks";
+import { insertBox } from "../../subtitleSlice";
 import AddBoxIcon from "@mui/icons-material/AddBox";
 import { IconButton } from "@mui/material";
+import { useSnackbar } from "notistack";
 
 export default function AddNote(props: {
   index: number;
@@ -9,6 +10,7 @@ export default function AddNote(props: {
   subtitleCount: number;
 }) {
   const dispatch = useAppDispatch();
+  const { enqueueSnackbar } = useSnackbar();
 
   const handleClick = () => {
     dispatch(
@@ -18,11 +20,16 @@ export default function AddNote(props: {
         indexToInsert: props.index + 1,
       })
     );
+    enqueueSnackbar(`Added box to ${props.end_time} ms`, {
+      variant: "success",
+    });
   };
 
   return (
-    <IconButton onClick={handleClick} title={"Add box below."}>
-      <AddBoxIcon />
-    </IconButton>
+    <>
+      <IconButton onClick={handleClick} title={"Add box below."}>
+        <AddBoxIcon />
+      </IconButton>
+    </>
   );
 }

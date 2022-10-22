@@ -1,8 +1,8 @@
 import { Chip } from "@mui/material";
 import { EditorState } from "draft-js";
 import { useEffect, useState } from "react";
-import { useAppSelector } from "../../../app/hooks";
-import { selectCPS } from "../../settings/settingsSlice";
+import { useAppSelector } from "../../../../app/hooks";
+import { selectCPS } from "../../../settings/settingsSlice";
 
 export default function CharacterPerSecond(props: {
   editorState: EditorState;

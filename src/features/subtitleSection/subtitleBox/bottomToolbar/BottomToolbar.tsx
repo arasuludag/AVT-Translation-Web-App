@@ -1,7 +1,7 @@
 import { CardActions, Grid } from "@mui/material";
 import { EditorState } from "draft-js";
 import { useMemo } from "react";
-import { Subtitle } from "../subtitleSlice";
+import { Subtitle } from "../../subtitleSlice";
 import AddBox from "./AddBox";
 import AddNote from "./AddNote";
 import ChractersPerSecond from "./ChractersPerSecond";

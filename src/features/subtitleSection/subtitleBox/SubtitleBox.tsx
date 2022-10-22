@@ -18,7 +18,7 @@ import { Grid } from "@mui/material";
 
 import ChractersPerLine from "./ChractersPerLine";
 import TopToolbar from "./TopToolbar";
-import BottomToolbar from "./BottomToolbar";
+import BottomToolbar from "./bottomToolbar/BottomToolbar";
 
 interface ChildComponentProps {
   subtitle: Subtitle;
