@@ -34,22 +34,19 @@ export default function BottomToolbar(props: ChildComponentProps) {
           xs
         >
           <AddNote index={props.index} note={props.subtitle.note} />
-          <AddBox
-            index={props.index}
-            subtitleCount={props.subtitleCount}
-            end_time={props.time.end}
-          />
+          <AddBox index={props.index} end_time={props.time.end} />
           <ChractersPerSecond
             editorState={props.editorState}
             time={props.time}
           />
         </Grid>
-        <DeleteBox index={props.index} subtitleCount={props.subtitleCount} />
+        <DeleteBox id={props.subtitle.id} subtitleCount={props.subtitleCount} />
       </Grid>
     ),
     [
       props.editorState,
       props.index,
+      props.subtitle.id,
       props.subtitle.note,
       props.subtitleCount,
       props.time,

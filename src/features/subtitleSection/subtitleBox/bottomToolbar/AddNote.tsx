@@ -36,6 +36,9 @@ export default function AddNote(props: { index: number; note: string }) {
   };
 
   const handleSubmit = () => {
+    enqueueSnackbar(`Added this note: ${text}`, {
+      variant: "success",
+    });
     setOpen(false);
     dispatch(
       insertToSubtitle({
@@ -45,9 +48,6 @@ export default function AddNote(props: { index: number; note: string }) {
         index: props.index,
       })
     );
-    enqueueSnackbar(`Added this note: ${text}`, {
-      variant: "success",
-    });
   };
 
   return (

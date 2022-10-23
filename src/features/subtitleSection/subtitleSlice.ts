@@ -17,6 +17,7 @@ export interface SubtitleFetch {
   transcriptData: Subtitle[];
   workingOndata: Subtitle[];
   subtitleToDisplay: { whichOne: "original" | "workingOn"; index: number };
+  nextFreeID: number;
   transcriptStatus: "idle" | "loading" | "failed";
   workingOnSubtitleStatus: "idle" | "loading" | "failed";
 }
@@ -25,6 +26,7 @@ const initialState: SubtitleFetch = {
   transcriptData: [],
   workingOndata: [],
   subtitleToDisplay: { whichOne: "original", index: -1 },
+  nextFreeID: 0,
   transcriptStatus: "idle",
   workingOnSubtitleStatus: "idle",
 };
@@ -45,7 +47,6 @@ export const subtitleSlice = createSlice({
     insertBox: (
       state,
       action: PayloadAction<{
-        id: number;
         end_time: number;
         indexToInsert: number;
       }>
@@ -53,22 +54,21 @@ export const subtitleSlice = createSlice({
       const index = action.payload.indexToInsert;
 
       state.workingOndata.splice(index, 0, {
-        id: action.payload.id,
+        id: state.nextFreeID,
         start_time: action.payload.end_time,
         end_time: action.payload.end_time,
         text: "",
         note: "",
         position: 1,
       });
-    },
-    deleteBox: (
-      state,
-      action: PayloadAction<{
-        index: number;
-      }>
-    ) => {
-      const index = action.payload.index;
 
+      state.nextFreeID++;
+    },
+    deleteBox: (state, action: PayloadAction<number>) => {
+      const index = state.workingOndata.findIndex(
+        (subtitle) => subtitle.id === action.payload
+      );
+      console.log(index);
       state.workingOndata.splice(index, 1);
     },
     setActiveSubtitle: (state, action: PayloadAction<number>) => {
@@ -98,6 +98,7 @@ export const subtitleSlice = createSlice({
       })
       .addCase(fetchSubtitle.fulfilled, (state, action) => {
         state.workingOnSubtitleStatus = "idle";
+        state.nextFreeID = action.payload.length;
         state.workingOndata = action.payload;
       })
       .addCase(fetchSubtitle.rejected, (state) => {

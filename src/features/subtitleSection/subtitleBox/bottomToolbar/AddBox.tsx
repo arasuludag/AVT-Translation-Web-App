@@ -4,25 +4,20 @@ import AddBoxIcon from "@mui/icons-material/AddBox";
 import { IconButton } from "@mui/material";
 import { useSnackbar } from "notistack";
 
-export default function AddNote(props: {
-  index: number;
-  end_time: number;
-  subtitleCount: number;
-}) {
+export default function AddNote(props: { index: number; end_time: number }) {
   const dispatch = useAppDispatch();
   const { enqueueSnackbar } = useSnackbar();
 
   const handleClick = () => {
+    enqueueSnackbar(`Added box to ${props.end_time} ms`, {
+      variant: "success",
+    });
     dispatch(
       insertBox({
-        id: props.subtitleCount,
         end_time: props.end_time,
         indexToInsert: props.index + 1,
       })
     );
-    enqueueSnackbar(`Added box to ${props.end_time} ms`, {
-      variant: "success",
-    });
   };
 
   return (

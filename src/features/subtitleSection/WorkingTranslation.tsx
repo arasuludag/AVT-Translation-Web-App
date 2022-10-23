@@ -1,5 +1,4 @@
-import React from "react";
-import { useEffect, useMemo } from "react";
+import { useEffect } from "react";
 import { shallowEqual } from "react-redux";
 import { useAppSelector, useAppDispatch } from "../../app/hooks";
 
@@ -17,10 +16,9 @@ function OriginalTranscript() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  // Boxes get rerendered every time subtitles change. This is better.
-  const optimizedSubtitleMap = useMemo(
-    () =>
-      subtitles.map((subtitle: Subtitle, index: number) => {
+  return (
+    <div>
+      {subtitles.map((subtitle: Subtitle, index: number) => {
         return (
           <SubtitleBox
             subtitle={subtitle}
@@ -30,12 +28,9 @@ function OriginalTranscript() {
             key={subtitle.id}
           />
         );
-      }),
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [subtitles.length]
+      })}
+    </div>
   );
-
-  return <div>{optimizedSubtitleMap}</div>;
 }
 
 export default OriginalTranscript;

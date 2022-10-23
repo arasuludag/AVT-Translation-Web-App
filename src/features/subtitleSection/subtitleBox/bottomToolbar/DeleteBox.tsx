@@ -5,7 +5,7 @@ import { deleteBox } from "../../subtitleSlice";
 import { useSnackbar } from "notistack";
 
 export default function DeleteBox(props: {
-  index: number;
+  id: number;
   subtitleCount: number;
 }) {
   const dispatch = useAppDispatch();
@@ -13,12 +13,8 @@ export default function DeleteBox(props: {
 
   const handleClick = () => {
     if (props.subtitleCount > 1) {
-      dispatch(
-        deleteBox({
-          index: props.index,
-        })
-      );
       enqueueSnackbar("Deleted box", { variant: "success" });
+      dispatch(deleteBox(props.id));
     } else
       enqueueSnackbar("You can't delete the last box!", { variant: "error" });
   };

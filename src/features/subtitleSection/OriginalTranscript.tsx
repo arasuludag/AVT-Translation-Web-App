@@ -32,8 +32,7 @@ function OriginalTranscript() {
           />
         );
       }),
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [subtitles.length]
+    [subtitles]
   );
 
   return <div>{optimizedSubtitleMap}</div>;
