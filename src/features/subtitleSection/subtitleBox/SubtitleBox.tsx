@@ -57,7 +57,6 @@ function SubtitleBox(props: ChildComponentProps) {
     () => (
       <CardContent>
         <TopToolbar
-          subtitle={props.subtitle}
           readOnly={props.readOnly}
           index={props.index}
           time={time}

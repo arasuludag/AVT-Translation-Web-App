@@ -1,6 +1,4 @@
 import { useEffect, useRef, useState } from "react";
-import { Player } from "react-tuby";
-import "react-tuby/css/main.css";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import { setActiveSubtitle } from "../subtitleSection/subtitleSlice";
 
@@ -70,16 +68,15 @@ function VideoPlayer(): JSX.Element {
         currentTime={currentTime}
         onSeek={(direction, howMuch) => onSeek(direction, howMuch)}
       />
-
-      <Player
+      <video
         src={video}
-        playerRef={player}
-        pictureInPicture={false}
-        primaryColor={"#FFFFFF"}
-        seekDuration={0.03}
-        keyboardShortcut={false}
-      />
-
+        ref={player}
+        width="100%"
+        controls
+        controlsList="nodownload nofullscreen noremoteplayback noplaybackrate"
+        disablePictureInPicture
+        use-credentials
+      ></video>
       <Subtitle playerWidth={player.current?.offsetWidth || 32} />
     </div>
   );

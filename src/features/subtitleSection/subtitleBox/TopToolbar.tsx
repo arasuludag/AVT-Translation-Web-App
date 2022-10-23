@@ -1,7 +1,7 @@
 import { Grid, InputAdornment, TextField } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useAppDispatch } from "../../../app/hooks";
-import { insertToSubtitle, Subtitle } from "../subtitleSlice";
+import { insertToSubtitle } from "../subtitleSlice";
 import GoToSecondButton from "./GoToSecondButton";
 
 interface Time {
@@ -10,7 +10,6 @@ interface Time {
 }
 
 interface TopToolbarProps {
-  subtitle: Subtitle;
   readOnly: boolean;
   index: number;
   time: Time;
@@ -22,6 +21,11 @@ export default function TopToolbar(props: TopToolbarProps) {
   const [time, setTime] = useState<Time>(props.time);
   const [error, setError] = useState(false);
 
+  function msToHMS(ms: number) {
+    if (ms > 0) return new Date(ms).toISOString().slice(11, 21);
+    else return "";
+  }
+
   useEffect(() => {
     if (time.end < time.start) setError(true);
     else setError(false);
@@ -32,10 +36,10 @@ export default function TopToolbar(props: TopToolbarProps) {
       <TextField
         sx={{ width: "16ch", margin: 1 }}
         id="outlined-number"
-        label="Start"
+        label={msToHMS(time.start)}
         type="number"
         error={error}
-        defaultValue={props.subtitle.start_time}
+        defaultValue={time.start || 0}
         InputLabelProps={{
           shrink: true,
         }}
@@ -58,15 +62,15 @@ export default function TopToolbar(props: TopToolbarProps) {
         }}
       />
       <Grid item xs={12} md={2} xl={2}>
-        <GoToSecondButton ms={props.time.start} readOnly={props.readOnly} />
+        <GoToSecondButton ms={time.start || 0} readOnly={props.readOnly} />
       </Grid>
       <TextField
         sx={{ width: "16ch", margin: 1 }}
         id="outlined-number"
-        label="End"
+        label={msToHMS(time.end)}
         type="number"
         error={error}
-        defaultValue={props.subtitle.end_time}
+        defaultValue={time.end || 0}
         InputLabelProps={{
           shrink: true,
         }}

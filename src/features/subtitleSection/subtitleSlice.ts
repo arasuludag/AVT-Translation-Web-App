@@ -68,7 +68,6 @@ export const subtitleSlice = createSlice({
       const index = state.workingOndata.findIndex(
         (subtitle) => subtitle.id === action.payload
       );
-      console.log(index);
       state.workingOndata.splice(index, 1);
     },
     setActiveSubtitle: (state, action: PayloadAction<number>) => {

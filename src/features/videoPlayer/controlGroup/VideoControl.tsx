@@ -1,4 +1,4 @@
-import { Box } from "@mui/material";
+import { Stack } from "@mui/material";
 import SeekBackOrForward from "./SeekBackOrForwardButtons";
 import ShowCurrentTime from "./ShowCurrentTime";
 import SubtitleToggle from "./SubtitleToggle";
@@ -10,13 +10,13 @@ interface ChildComponentProps {
 
 export default function VideoControl(props: ChildComponentProps) {
   return (
-    <Box
+    <Stack
       sx={{
         position: "absolute",
         right: 0,
         display: "flex",
         zIndex: 3,
-        bottom: 60,
+        bottom: 75,
         flexDirection: "column",
         alignItems: "center",
       }}
@@ -27,6 +27,6 @@ export default function VideoControl(props: ChildComponentProps) {
       />
 
       <ShowCurrentTime currentTime={props.currentTime} />
-    </Box>
+    </Stack>
   );
 }
