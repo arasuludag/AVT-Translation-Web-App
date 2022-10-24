@@ -40,7 +40,10 @@ export default function BottomToolbar(props: ChildComponentProps) {
             time={props.time}
           />
         </Grid>
-        <DeleteBox id={props.subtitle.id} subtitleCount={props.subtitleCount} />
+        <DeleteBox
+          id={props.subtitle.id!}
+          subtitleCount={props.subtitleCount}
+        />
       </Grid>
     ),
     [

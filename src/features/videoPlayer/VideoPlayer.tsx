@@ -75,7 +75,6 @@ function VideoPlayer(): JSX.Element {
         controls
         controlsList="nodownload nofullscreen noremoteplayback noplaybackrate"
         disablePictureInPicture
-        use-credentials
       ></video>
       <Subtitle playerWidth={player.current?.offsetWidth || 32} />
     </div>

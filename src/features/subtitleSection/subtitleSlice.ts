@@ -5,7 +5,7 @@ import Transcript from "./subtitle.json";
 import WorkingOnSubtitle from "./subtitleWorkingOn.json";
 
 export interface Subtitle {
-  id: number;
+  id?: number;
   start_time: number;
   end_time: number;
   text: string;
@@ -98,7 +98,10 @@ export const subtitleSlice = createSlice({
       .addCase(fetchSubtitle.fulfilled, (state, action) => {
         state.workingOnSubtitleStatus = "idle";
         state.nextFreeID = action.payload.length;
-        state.workingOndata = action.payload;
+        const subtitle = action.payload.map((subtitle: Subtitle, index) => {
+          return { ...subtitle, id: index };
+        });
+        state.workingOndata = subtitle;
       })
       .addCase(fetchSubtitle.rejected, (state) => {
         state.workingOnSubtitleStatus = "failed";
@@ -108,7 +111,10 @@ export const subtitleSlice = createSlice({
       })
       .addCase(fetchOriginalTranscript.fulfilled, (state, action) => {
         state.transcriptStatus = "idle";
-        state.transcriptData = action.payload;
+        const subtitle = action.payload.map((subtitle: Subtitle, index) => {
+          return { ...subtitle, id: index };
+        });
+        state.transcriptData = subtitle;
       })
       .addCase(fetchOriginalTranscript.rejected, (state) => {
         state.transcriptStatus = "failed";
