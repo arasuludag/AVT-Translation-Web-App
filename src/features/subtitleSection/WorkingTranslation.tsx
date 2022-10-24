@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useMemo } from "react";
 import { shallowEqual } from "react-redux";
 import { useAppSelector, useAppDispatch } from "../../app/hooks";
 
@@ -16,21 +16,18 @@ function OriginalTranscript() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  return (
-    <div>
-      {subtitles.map((subtitle: Subtitle, index: number) => {
+  const optimizedBoxes = useMemo(
+    () =>
+      subtitles.map((subtitle: Subtitle, index: number) => {
         return (
-          <SubtitleBox
-            subtitle={subtitle}
-            readOnly={false}
-            index={index}
-            subtitleCount={subtitles.length}
-            key={subtitle.id}
-          />
+          <SubtitleBox subtitle={subtitle} readOnly={false} key={subtitle.id} />
         );
-      })}
-    </div>
+      }),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [subtitles.length]
   );
+
+  return <div>{optimizedBoxes}</div>;
 }
 
 export default OriginalTranscript;

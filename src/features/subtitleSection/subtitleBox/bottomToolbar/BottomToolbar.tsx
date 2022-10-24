@@ -1,5 +1,4 @@
 import { CardActions, Grid } from "@mui/material";
-import { EditorState } from "draft-js";
 import { useMemo } from "react";
 import { Subtitle } from "../../subtitleSlice";
 import AddBox from "./AddBox";
@@ -9,10 +8,8 @@ import DeleteBox from "./DeleteBox";
 
 interface ChildComponentProps {
   subtitle: Subtitle;
-  subtitleCount: number;
   time: { end: number; start: number };
-  index: number;
-  editorState: EditorState;
+  text: string;
 }
 
 export default function BottomToolbar(props: ChildComponentProps) {
@@ -33,27 +30,14 @@ export default function BottomToolbar(props: ChildComponentProps) {
           item
           xs
         >
-          <AddNote index={props.index} note={props.subtitle.note} />
-          <AddBox index={props.index} end_time={props.time.end} />
-          <ChractersPerSecond
-            editorState={props.editorState}
-            time={props.time}
-          />
+          <AddNote id={props.subtitle.id} note={props.subtitle.note} />
+          <AddBox id={props.subtitle.id} end_time={props.time.end} />
+          <ChractersPerSecond text={props.text} time={props.time} />
         </Grid>
-        <DeleteBox
-          id={props.subtitle.id!}
-          subtitleCount={props.subtitleCount}
-        />
+        <DeleteBox id={props.subtitle.id} />
       </Grid>
     ),
-    [
-      props.editorState,
-      props.index,
-      props.subtitle.id,
-      props.subtitle.note,
-      props.subtitleCount,
-      props.time,
-    ]
+    [props.text, props.subtitle.id, props.subtitle.note, props.time]
   );
 
   return <CardActions>{toolbar}</CardActions>;

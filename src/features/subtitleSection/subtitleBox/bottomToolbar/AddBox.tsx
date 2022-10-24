@@ -4,7 +4,7 @@ import AddBoxIcon from "@mui/icons-material/AddBox";
 import { IconButton } from "@mui/material";
 import { useSnackbar } from "notistack";
 
-export default function AddNote(props: { index: number; end_time: number }) {
+export default function AddNote(props: { id: number; end_time: number }) {
   const dispatch = useAppDispatch();
   const { enqueueSnackbar } = useSnackbar();
 
@@ -15,7 +15,7 @@ export default function AddNote(props: { index: number; end_time: number }) {
     dispatch(
       insertBox({
         end_time: props.end_time,
-        indexToInsert: props.index + 1,
+        idToInsert: props.id,
       })
     );
   };

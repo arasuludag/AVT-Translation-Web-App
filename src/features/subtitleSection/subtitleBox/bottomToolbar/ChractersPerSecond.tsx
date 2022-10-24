@@ -1,11 +1,10 @@
 import { Chip } from "@mui/material";
-import { EditorState } from "draft-js";
 import { useEffect, useState } from "react";
 import { useAppSelector } from "../../../../app/hooks";
 import { selectCPS } from "../../../settings/settingsSlice";
 
 export default function CharacterPerSecond(props: {
-  editorState: EditorState;
+  text: string;
   time: { start: number; end: number };
 }) {
   const [cps, setCPS] = useState<number>(0);
@@ -13,9 +12,7 @@ export default function CharacterPerSecond(props: {
 
   const recievedCPS = useAppSelector(selectCPS);
 
-  const totalBoxLength = props.editorState
-    .getCurrentContent()
-    .getPlainText().length;
+  const totalBoxLength = props.text.length;
 
   useEffect(() => {
     // If "|| 0" isn't there, it causes a NaN on some edge cases.

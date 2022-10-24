@@ -16,7 +16,7 @@ import ModeCommentIcon from "@mui/icons-material/ModeComment";
 import InsertCommentIcon from "@mui/icons-material/InsertComment";
 import { useSnackbar } from "notistack";
 
-export default function AddNote(props: { index: number; note: string }) {
+export default function AddNote(props: { id: number; note: string }) {
   const dispatch = useAppDispatch();
   const [open, setOpen] = useState(false);
   const [text, setText] = useState(props.note);
@@ -45,7 +45,7 @@ export default function AddNote(props: { index: number; note: string }) {
         subtitle: {
           note: text,
         },
-        index: props.index,
+        id: props.id,
       })
     );
   };

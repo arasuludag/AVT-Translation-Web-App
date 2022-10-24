@@ -22,7 +22,8 @@ export default function GoToSecondButton(props: {
       onClick={handleClick}
       title={"Go to " + props.ms}
       className="goToSecondButton"
-      sx={{ margin: 1 }}
+      sx={{ width: "30px", height: "30px", margin: "0 auto" }}
+      size="small"
     >
       <PlayCircleFilledWhiteIcon />
     </IconButton>

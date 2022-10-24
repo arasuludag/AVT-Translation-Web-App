@@ -28,11 +28,11 @@ export default function SeekBackOrForward(props: Seek) {
         },
       }}
     >
-      <ButtonGroup variant="outlined">
-        <Button style={{ zIndex: 2 }} onClick={() => handleClick(false)}>
+      <ButtonGroup color="primary">
+        <Button onClick={() => handleClick(false)}>
           <RestoreIcon />
         </Button>
-        <Button style={{ zIndex: 2 }} onClick={() => handleClick(true)}>
+        <Button onClick={() => handleClick(true)}>
           <UpdateIcon />
         </Button>
       </ButtonGroup>

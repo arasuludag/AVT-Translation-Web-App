@@ -4,8 +4,16 @@ import { RootState } from "../../app/store";
 import Transcript from "./subtitle.json";
 import WorkingOnSubtitle from "./subtitleWorkingOn.json";
 
+export interface SubtitlePayload {
+  start_time: number;
+  end_time: number;
+  text: string;
+  note: string;
+  position: number;
+}
+
 export interface Subtitle {
-  id?: number;
+  id: number;
   start_time: number;
   end_time: number;
   text: string;
@@ -16,7 +24,7 @@ export interface Subtitle {
 export interface SubtitleFetch {
   transcriptData: Subtitle[];
   workingOndata: Subtitle[];
-  subtitleToDisplay: { whichOne: "original" | "workingOn"; index: number };
+  subtitleToDisplay: { whichOne: "original" | "workingOn"; id: number };
   nextFreeID: number;
   transcriptStatus: "idle" | "loading" | "failed";
   workingOnSubtitleStatus: "idle" | "loading" | "failed";
@@ -25,7 +33,7 @@ export interface SubtitleFetch {
 const initialState: SubtitleFetch = {
   transcriptData: [],
   workingOndata: [],
-  subtitleToDisplay: { whichOne: "original", index: -1 },
+  subtitleToDisplay: { whichOne: "original", id: -1 },
   nextFreeID: 0,
   transcriptStatus: "idle",
   workingOnSubtitleStatus: "idle",
@@ -37,10 +45,17 @@ export const subtitleSlice = createSlice({
   reducers: {
     insertToSubtitle: (
       state,
-      action: PayloadAction<{ subtitle: Partial<Subtitle>; index: number }>
+      action: PayloadAction<{
+        subtitle: Partial<Subtitle>;
+        id: number;
+      }>
     ) => {
-      state.workingOndata[action.payload.index] = {
-        ...state.workingOndata[action.payload.index],
+      const index = state.workingOndata.findIndex(
+        (subtitle) => subtitle.id === action.payload.id
+      );
+
+      state.workingOndata[index] = {
+        ...state.workingOndata[index],
         ...action.payload.subtitle,
       };
     },
@@ -48,12 +63,14 @@ export const subtitleSlice = createSlice({
       state,
       action: PayloadAction<{
         end_time: number;
-        indexToInsert: number;
+        idToInsert: number;
       }>
     ) => {
-      const index = action.payload.indexToInsert;
+      const index = state.workingOndata.findIndex(
+        (subtitle) => subtitle.id === action.payload.idToInsert
+      );
 
-      state.workingOndata.splice(index, 0, {
+      state.workingOndata.splice(index + 1, 0, {
         id: state.nextFreeID,
         start_time: action.payload.end_time,
         end_time: action.payload.end_time,
@@ -77,11 +94,14 @@ export const subtitleSlice = createSlice({
         subtitles = state.transcriptData;
       else subtitles = state.workingOndata;
 
-      state.subtitleToDisplay.index = subtitles.findIndex(
+      const foundSubtitle = subtitles.find(
         (subtitle) =>
           subtitle.start_time <= action.payload &&
           subtitle.end_time > action.payload
       );
+
+      if (foundSubtitle) state.subtitleToDisplay.id = foundSubtitle.id;
+      else state.subtitleToDisplay.id = -1;
     },
     setSubtitleToDisplay: (
       state,
@@ -98,9 +118,11 @@ export const subtitleSlice = createSlice({
       .addCase(fetchSubtitle.fulfilled, (state, action) => {
         state.workingOnSubtitleStatus = "idle";
         state.nextFreeID = action.payload.length;
-        const subtitle = action.payload.map((subtitle: Subtitle, index) => {
-          return { ...subtitle, id: index };
-        });
+        const subtitle: Subtitle[] = action.payload.map(
+          (subtitle: SubtitlePayload, index) => {
+            return { ...subtitle, id: index };
+          }
+        );
         state.workingOndata = subtitle;
       })
       .addCase(fetchSubtitle.rejected, (state) => {
@@ -111,9 +133,11 @@ export const subtitleSlice = createSlice({
       })
       .addCase(fetchOriginalTranscript.fulfilled, (state, action) => {
         state.transcriptStatus = "idle";
-        const subtitle = action.payload.map((subtitle: Subtitle, index) => {
-          return { ...subtitle, id: index };
-        });
+        const subtitle: Subtitle[] = action.payload.map(
+          (subtitle: SubtitlePayload, index) => {
+            return { ...subtitle, id: index };
+          }
+        );
         state.transcriptData = subtitle;
       })
       .addCase(fetchOriginalTranscript.rejected, (state) => {
@@ -156,5 +180,7 @@ export const selectTranscript = (state: RootState) =>
   state.subtitle.transcriptData;
 export const selectActiveSubtitle = (state: RootState) =>
   state.subtitle.subtitleToDisplay;
+export const selectSubtitleCount = (state: RootState) =>
+  state.subtitle.workingOndata.length;
 
 export default subtitleSlice.reducer;

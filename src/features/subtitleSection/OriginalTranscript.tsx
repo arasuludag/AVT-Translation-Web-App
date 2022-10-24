@@ -23,13 +23,7 @@ function OriginalTranscript() {
     () =>
       subtitles.map((subtitle: Subtitle, index: number) => {
         return (
-          <SubtitleBox
-            subtitle={subtitle}
-            readOnly={true}
-            index={index}
-            subtitleCount={subtitles.length}
-            key={subtitle.id}
-          />
+          <SubtitleBox subtitle={subtitle} readOnly={true} key={subtitle.id} />
         );
       }),
     [subtitles]

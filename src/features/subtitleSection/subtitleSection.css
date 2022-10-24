@@ -8,7 +8,21 @@
   min-height: 180px;
 }
 
-.editorClassName {
-  overflow: hidden;
-  min-height: 120px;
+.ql-editor {
+  font-size: 16px;
+  line-height: 32px;
+}
+
+.editor {
+  text-align: start;
+  height: 100%;
+  width: 100%;
+}
+
+.ql-container {
+  height: 120px;
+}
+
+.ql-snow {
+  border: 0 !important;
 }

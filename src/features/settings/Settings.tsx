@@ -10,19 +10,10 @@ import {
   selectCPL,
   selectCPS,
   selectSeekAmount,
-  selectTheme,
   setBoxSettings,
-  setTheme,
   setVideoSettings,
 } from "./settingsSlice";
-import {
-  FormControlLabel,
-  Grid,
-  Slider,
-  Stack,
-  Switch,
-  Typography,
-} from "@mui/material";
+import { IconButton, Slider, Stack, Typography } from "@mui/material";
 
 export default function Settings() {
   const dispatch = useAppDispatch();
@@ -30,7 +21,6 @@ export default function Settings() {
   const cps = useAppSelector(selectCPS);
   const cpl = useAppSelector(selectCPL);
   const seekAmount = useAppSelector(selectSeekAmount);
-  const theme = useAppSelector(selectTheme);
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -42,24 +32,17 @@ export default function Settings() {
 
   return (
     <div>
-      <Button onClick={handleClickOpen}>
+      <IconButton
+        onClick={handleClickOpen}
+        sx={{ top: "50%", transform: "translateY(-50%)" }}
+        color="primary"
+      >
         <SettingsIcon />
-      </Button>
+      </IconButton>
       <Dialog open={open} onClose={handleClose}>
         <DialogTitle>Settings</DialogTitle>
         <DialogContent>
           <Stack spacing={2}>
-            <FormControlLabel
-              control={
-                <Switch
-                  sx={{ m: 1 }}
-                  defaultChecked={theme}
-                  onChange={(event, value) => dispatch(setTheme(value))}
-                />
-              }
-              label="Theme"
-            />
-
             <Typography gutterBottom>CPL: </Typography>
             <Slider
               sx={{ width: 300 }}

@@ -1,4 +1,10 @@
-import { Grid, InputAdornment, TextField } from "@mui/material";
+import {
+  Grid,
+  InputAdornment,
+  Stack,
+  TextField,
+  Typography,
+} from "@mui/material";
 import { useEffect, useState } from "react";
 import { useAppDispatch } from "../../../app/hooks";
 import { insertToSubtitle } from "../subtitleSlice";
@@ -11,7 +17,7 @@ interface Time {
 
 interface TopToolbarProps {
   readOnly: boolean;
-  index: number;
+  id: number;
   time: Time;
   setTime(time: Partial<Time>): void;
 }
@@ -22,6 +28,7 @@ export default function TopToolbar(props: TopToolbarProps) {
   const [error, setError] = useState(false);
 
   function msToHMS(ms: number) {
+    if (ms > 86399999) return "< 1 day";
     if (ms > 0) return new Date(ms).toISOString().slice(11, 21);
     else return "";
   }
@@ -34,7 +41,7 @@ export default function TopToolbar(props: TopToolbarProps) {
   return (
     <Grid container direction="row" justifyContent="center" alignItems="center">
       <TextField
-        sx={{ width: "16ch", margin: 1 }}
+        sx={{ width: "18ch", margin: 1 }}
         id="outlined-number"
         label={msToHMS(time.start)}
         type="number"
@@ -54,7 +61,7 @@ export default function TopToolbar(props: TopToolbarProps) {
               subtitle: {
                 start_time: parseInt(event.target.value),
               },
-              index: props.index,
+              id: props.id,
             })
           );
           props.setTime({ start: parseInt(event.target.value) });
@@ -62,10 +69,15 @@ export default function TopToolbar(props: TopToolbarProps) {
         }}
       />
       <Grid item xs={12} md={2} xl={2}>
-        <GoToSecondButton ms={time.start || 0} readOnly={props.readOnly} />
+        <Stack>
+          <Typography variant="caption">
+            {msToHMS(time.end - time.start)}
+          </Typography>
+          <GoToSecondButton ms={time.start || 0} readOnly={props.readOnly} />
+        </Stack>
       </Grid>
       <TextField
-        sx={{ width: "16ch", margin: 1 }}
+        sx={{ width: "18ch", margin: 1 }}
         id="outlined-number"
         label={msToHMS(time.end)}
         type="number"
@@ -85,7 +97,7 @@ export default function TopToolbar(props: TopToolbarProps) {
               subtitle: {
                 end_time: parseInt(event.target.value),
               },
-              index: props.index,
+              id: props.id,
             })
           );
           props.setTime({ end: parseInt(event.target.value) });

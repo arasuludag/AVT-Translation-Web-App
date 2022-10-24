@@ -12,7 +12,7 @@ export default function SubtitleToggle(props: { currentTime: number }) {
   const activeSubtitle = useAppSelector(selectActiveSubtitle);
 
   const MaterialUISwitch = styled(Switch)(({ theme }) => ({
-    width: 80,
+    width: 62,
     height: 34,
     padding: 7,
     "& .MuiSwitch-switchBase": {
@@ -21,7 +21,7 @@ export default function SubtitleToggle(props: { currentTime: number }) {
 
       backgroundImage: `url(${subtitleIcon})`,
       "&.Mui-checked": {
-        transform: "translateX(45px)",
+        transform: "translateX(28px)",
         "& .MuiSwitch-thumb:before": {
           backgroundImage: `url(${subtitleIcon})`,
         },

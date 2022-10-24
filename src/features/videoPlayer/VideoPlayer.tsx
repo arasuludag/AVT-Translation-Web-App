@@ -5,10 +5,11 @@ import { setActiveSubtitle } from "../subtitleSection/subtitleSlice";
 import "./videoPlayer.css";
 
 import { selectVideoTime } from "./videoSlice";
-import { Box } from "@mui/material";
+import { Grid } from "@mui/material";
 import Subtitle from "./Subtitle";
 import Settings from "../settings/Settings";
 import VideoControl from "./controlGroup/VideoControl";
+import ThemeSelection from "../settings/ThemeSelection";
 
 // @ts-ignore
 import video from "./video.mp4"; // Will be fetched from the backend on the real thing.
@@ -31,11 +32,6 @@ function VideoPlayer(): JSX.Element {
     player.current?.addEventListener("timeupdate", () => {
       setCurrentTime(Math.round(player.current!.currentTime * 1000));
     });
-
-    // Prevent right click.
-    // document.addEventListener("contextmenu", (e) => {
-    //   e.preventDefault();
-    // });
   }, []);
 
   useEffect(() => {
@@ -52,8 +48,9 @@ function VideoPlayer(): JSX.Element {
   }
 
   return (
-    <div className="container">
-      <Box
+    <div className="container" onContextMenu={(e) => e.preventDefault()}>
+      <Grid
+        container
         sx={{
           position: "absolute",
           top: 10,
@@ -63,7 +60,8 @@ function VideoPlayer(): JSX.Element {
         }}
       >
         <Settings />
-      </Box>
+        <ThemeSelection />
+      </Grid>
       <VideoControl
         currentTime={currentTime}
         onSeek={(direction, howMuch) => onSeek(direction, howMuch)}

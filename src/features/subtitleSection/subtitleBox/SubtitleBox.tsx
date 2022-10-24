@@ -1,10 +1,7 @@
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
-import { Editor } from "react-draft-wysiwyg";
-import { EditorState } from "draft-js";
-import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
-import { stateToHTML } from "draft-js-export-html";
-import { stateFromHTML } from "draft-js-import-html";
+import ReactQuill from "react-quill";
+import "react-quill/dist/quill.snow.css";
 
 import Alert from "@mui/material/Alert";
 import {
@@ -13,123 +10,119 @@ import {
   Subtitle,
 } from "../subtitleSlice";
 import { useAppDispatch, useAppSelector } from "../../../app/hooks";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { Grid } from "@mui/material";
 
 import ChractersPerLine from "./ChractersPerLine";
 import TopToolbar from "./TopToolbar";
 import BottomToolbar from "./bottomToolbar/BottomToolbar";
 
+const h2p = require("html2plaintext");
+
 interface ChildComponentProps {
   subtitle: Subtitle;
   readOnly: boolean;
-  subtitleCount: number;
-  index: number;
 }
 
 function SubtitleBox(props: ChildComponentProps) {
   const dispatch = useAppDispatch();
   const activeSubtitle = useAppSelector(selectActiveSubtitle);
-
+  const [text, setText] = useState(props.subtitle.text);
   const [time, setTime] = useState({
     start: props.subtitle.start_time,
     end: props.subtitle.end_time,
   }); // For the "Goto button" and other componenents that need updated time.
 
-  const [editorState, setEditorState] = useState(() =>
-    EditorState.createWithContent(stateFromHTML(props.subtitle.text))
-  );
-
   const [raised, setRaised] = useState(false);
 
   useEffect(() => {
     if (
+      activeSubtitle.id === props.subtitle.id &&
       ((activeSubtitle.whichOne === "original" && props.readOnly) ||
-        (activeSubtitle.whichOne === "workingOn" && !props.readOnly)) &&
-      activeSubtitle.index === props.index
+        (activeSubtitle.whichOne === "workingOn" && !props.readOnly))
     )
       setRaised(true);
     else setRaised(false);
-  }, [activeSubtitle, props.subtitle.id, props.readOnly, props.index]);
+  }, [activeSubtitle, props.readOnly, props.subtitle.id]);
 
-  // So we wouldn't re-render the card every time activeSubtitle state changes.
-  const cardContent = useMemo(
+  const optimizedTopToolbar = useMemo(
     () => (
-      <CardContent>
-        <TopToolbar
-          readOnly={props.readOnly}
-          index={props.index}
-          time={time}
-          setTime={(timeRecieved) => setTime({ ...time, ...timeRecieved })}
-        />
-        <Grid container>
-          <Grid item xs={10}>
-            <Editor
-              readOnly={props.readOnly}
-              editorState={editorState}
-              toolbarClassName="toolbarClassName"
-              wrapperClassName="wrapperClassName"
-              editorClassName="editorClassName"
-              spellCheck
-              onChange={() =>
-                dispatch(
-                  insertToSubtitle({
-                    subtitle: {
-                      text: stateToHTML(editorState.getCurrentContent()),
-                    },
-                    index: props.index,
-                  })
-                )
-              }
-              onEditorStateChange={setEditorState}
-              toolbar={{
-                options: props.readOnly ? [] : ["inline", "history"],
-                inline: {
-                  options: props.readOnly
-                    ? []
-                    : ["bold", "italic", "underline"],
-                },
-              }}
-            />
-          </Grid>
-          <ChractersPerLine editorState={editorState} />
-        </Grid>
-        {props.readOnly && props.subtitle.note ? (
-          <Alert severity="info">{props.subtitle.note}</Alert>
-        ) : null}
-        {!props.readOnly ? (
-          <BottomToolbar
-            subtitle={props.subtitle}
-            subtitleCount={props.subtitleCount}
-            time={time}
-            index={props.index}
-            editorState={editorState}
-          />
-        ) : null}
-      </CardContent>
+      <TopToolbar
+        readOnly={props.readOnly}
+        id={props.subtitle.id}
+        time={time}
+        setTime={(timeRecieved) => setTime({ ...time, ...timeRecieved })}
+      />
     ),
-    [
-      dispatch,
-      editorState,
-      props.index,
-      props.readOnly,
-      props.subtitle,
-      props.subtitleCount,
-      time,
-    ]
+    [props.subtitle.id, props.readOnly, time]
+  );
+
+  const optimizedEditor = useMemo(
+    () => (
+      <Grid container>
+        <Grid item xs={10}>
+          <ReactQuill
+            theme="snow"
+            className="editor"
+            value={text}
+            onChange={(value) => {
+              dispatch(
+                insertToSubtitle({
+                  subtitle: {
+                    text: value,
+                  },
+                  id: props.subtitle.id,
+                })
+              );
+              setText(value);
+            }}
+            readOnly={props.readOnly}
+            modules={{
+              toolbar: [["bold", "italic", "underline"], ["clean"]],
+            }}
+            formats={["bold", "italic", "underline"]}
+          />
+        </Grid>
+        <ChractersPerLine text={h2p(text)} />
+      </Grid>
+    ),
+    [dispatch, text, props.readOnly, props.subtitle.id]
+  );
+
+  const optimizedNoteDisplay = useMemo(
+    () =>
+      props.readOnly && props.subtitle.note ? (
+        <Alert sx={{ borderRadius: 5 }} severity="info">
+          {props.subtitle.note}
+        </Alert>
+      ) : null,
+    [props.readOnly, props.subtitle.note]
+  );
+
+  const optimizedBottomToolbar = useMemo(
+    () =>
+      !props.readOnly ? (
+        <BottomToolbar subtitle={props.subtitle} time={time} text={h2p(text)} />
+      ) : null,
+    [props.readOnly, props.subtitle, time, text]
   );
 
   return (
     <Card
       raised={raised}
       sx={{
-        minHeight: 335,
+        minHeight: 320,
         maxWidth: 600,
         margin: "20px auto",
         borderRadius: 5,
       }}
     >
-      {cardContent}
+      <CardContent>
+        {optimizedTopToolbar}
+        {optimizedEditor}
+        {optimizedNoteDisplay}
+        {optimizedBottomToolbar}
+      </CardContent>
     </Card>
   );
 }
