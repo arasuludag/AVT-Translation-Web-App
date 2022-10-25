@@ -73,7 +73,8 @@ export const subtitleSlice = createSlice({
       state.workingOndata.splice(index + 1, 0, {
         id: state.nextFreeID,
         start_time: action.payload.end_time,
-        end_time: action.payload.end_time,
+        end_time:
+          state.workingOndata[index + 1]?.start_time || action.payload.end_time,
         text: "",
         note: "",
         position: 1,
@@ -182,5 +183,7 @@ export const selectActiveSubtitle = (state: RootState) =>
   state.subtitle.subtitleToDisplay;
 export const selectSubtitleCount = (state: RootState) =>
   state.subtitle.workingOndata.length;
+export const selectSubtitleTimings = (state: RootState) =>
+  state.subtitle.workingOndata.map(({ id, note, text, ...timings }) => timings);
 
 export default subtitleSlice.reducer;

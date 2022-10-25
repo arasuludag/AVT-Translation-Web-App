@@ -1,7 +1,7 @@
 [
   {
     "start_time": 3400,
-    "end_time": 6177,
+    "end_time": 5000,
     "text": "<p><em>Lorem ipsum dolor</em> sit amet,</p><p>consectetur adipiscing elit.</p>",
     "note": "Sample note",
     "position": 1

@@ -1,7 +1,7 @@
 [
   {
     "start_time": 3400,
-    "end_time": 6177,
+    "end_time": 5000,
     "text": "",
     "note": "",
     "position": 1
@@ -9,14 +9,14 @@
   {
     "start_time": 6177,
     "end_time": 10000,
-    "text": "",
-    "note": "",
+    "text": "<p>This is a sample box that was</p><p>meant to imitate a previous save.</p>",
+    "note": "A note that was added before.",
     "position": 1
   },
   {
-    "start_time": 10000,
+    "start_time": 9000,
     "end_time": 13655,
-    "text": "",
+    "text": "<p>This example has <u>a timing conflict</u>.</p><p>You can see the red input box above.</p>",
     "note": "",
     "position": 1
   },

@@ -10,7 +10,7 @@ import {
   Subtitle,
 } from "../subtitleSlice";
 import { useAppDispatch, useAppSelector } from "../../../app/hooks";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Grid } from "@mui/material";
 
 import ChractersPerLine from "./ChractersPerLine";
