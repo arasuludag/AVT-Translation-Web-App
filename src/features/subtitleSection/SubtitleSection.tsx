@@ -13,11 +13,12 @@ function SubtitleSection() {
       justifyContent="center"
       alignItems="flex-start"
       style={{ overflowY: "auto", height: "100vh" }}
+      spacing={2}
     >
-      <Grid item md style={{ margin: "0 10px 100vh 10px" }}>
+      <Grid item md>
         <OriginalTranscript />
       </Grid>
-      <Grid item md style={{ margin: "0 10px 100vh 10px" }}>
+      <Grid item md>
         <WorkingTranslation />
       </Grid>
     </Grid>

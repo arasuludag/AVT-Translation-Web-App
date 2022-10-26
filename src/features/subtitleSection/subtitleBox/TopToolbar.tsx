@@ -43,7 +43,6 @@ export default function TopToolbar(props: TopToolbarProps) {
         (subtitle) => subtitle.start_time < time && subtitle.end_time > time
       );
     }
-
     if (!props.readOnly) {
       if (props.time.end < props.time.start)
         setError({ start: true, end: true });

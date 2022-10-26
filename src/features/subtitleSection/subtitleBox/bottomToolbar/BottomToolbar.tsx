@@ -14,8 +14,18 @@ interface ChildComponentProps {
 
 export default function BottomToolbar(props: ChildComponentProps) {
   // No need to update any component that doesn't need updating. useMemo is nice.
-  const toolbar = useMemo(
+  const toolbarElements = useMemo(
     () => (
+      <>
+        <AddNote id={props.subtitle.id} note={props.subtitle.note} />
+        <AddBox id={props.subtitle.id} end_time={props.time.end} />
+      </>
+    ),
+    [props.subtitle.id, props.subtitle.note, props.time]
+  );
+
+  return (
+    <CardActions>
       <Grid
         container
         direction="row"
@@ -30,15 +40,11 @@ export default function BottomToolbar(props: ChildComponentProps) {
           item
           xs
         >
-          <AddNote id={props.subtitle.id} note={props.subtitle.note} />
-          <AddBox id={props.subtitle.id} end_time={props.time.end} />
+          {toolbarElements}
           <ChractersPerSecond text={props.text} time={props.time} />
         </Grid>
         <DeleteBox id={props.subtitle.id} />
       </Grid>
-    ),
-    [props.text, props.subtitle.id, props.subtitle.note, props.time]
+    </CardActions>
   );
-
-  return <CardActions>{toolbar}</CardActions>;
 }

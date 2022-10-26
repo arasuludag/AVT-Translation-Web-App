@@ -1,8 +1,6 @@
 import Grid from "@mui/material/Grid";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 
-import "./App.css";
-
 import VideoPlayer from "./features/videoPlayer/VideoPlayer";
 import SubtitleSection from "./features/subtitleSection/SubtitleSection";
 import { SnackbarProvider } from "notistack";

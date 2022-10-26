@@ -56,6 +56,7 @@ function VideoPlayer(): JSX.Element {
           top: 10,
           zIndex: 3,
           left: 0,
+          maxWidth: "350px",
           margin: 1,
         }}
       >
