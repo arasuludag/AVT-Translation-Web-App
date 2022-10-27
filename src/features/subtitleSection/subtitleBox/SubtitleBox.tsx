@@ -38,8 +38,8 @@ function SubtitleBox(props: ChildComponentProps) {
   useEffect(() => {
     if (
       activeSubtitle.id === props.subtitle.id &&
-      ((activeSubtitle.whichOne === "original" && props.readOnly) ||
-        (activeSubtitle.whichOne === "workingOn" && !props.readOnly))
+      ((!activeSubtitle.isWorkingOn && props.readOnly) ||
+        (activeSubtitle.isWorkingOn && !props.readOnly))
     )
       setRaised(true);
     else setRaised(false);

@@ -56,8 +56,8 @@ export default function SubtitleToggle(props: { currentTime: number }) {
   }));
 
   const handleChange = (checked: boolean) => {
-    if (checked) dispatch(setSubtitleToDisplay("workingOn"));
-    else dispatch(setSubtitleToDisplay("original"));
+    if (checked) dispatch(setSubtitleToDisplay(true));
+    else dispatch(setSubtitleToDisplay(false));
 
     dispatch(setActiveSubtitle(props.currentTime));
   };
@@ -65,7 +65,7 @@ export default function SubtitleToggle(props: { currentTime: number }) {
   return (
     <MaterialUISwitch
       onChange={(event, checked) => handleChange(checked)}
-      checked={activeSubtitle.whichOne === "workingOn" ? true : false}
+      checked={activeSubtitle.isWorkingOn}
     />
   );
 }

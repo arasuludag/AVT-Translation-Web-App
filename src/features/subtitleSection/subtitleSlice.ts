@@ -24,7 +24,7 @@ export interface Subtitle {
 export interface SubtitleFetch {
   transcriptData: Subtitle[];
   workingOndata: Subtitle[];
-  subtitleToDisplay: { whichOne: "original" | "workingOn"; id: number };
+  subtitleToDisplay: { isWorkingOn: boolean; id: number };
   nextFreeID: number;
   transcriptStatus: "idle" | "loading" | "failed";
   workingOnSubtitleStatus: "idle" | "loading" | "failed";
@@ -33,7 +33,7 @@ export interface SubtitleFetch {
 const initialState: SubtitleFetch = {
   transcriptData: [],
   workingOndata: [],
-  subtitleToDisplay: { whichOne: "original", id: -1 },
+  subtitleToDisplay: { isWorkingOn: false, id: -1 },
   nextFreeID: 0,
   transcriptStatus: "idle",
   workingOnSubtitleStatus: "idle",
@@ -91,7 +91,7 @@ export const subtitleSlice = createSlice({
     setActiveSubtitle: (state, action: PayloadAction<number>) => {
       let subtitles: Subtitle[];
 
-      if (state.subtitleToDisplay.whichOne === "original")
+      if (!state.subtitleToDisplay.isWorkingOn)
         subtitles = state.transcriptData;
       else subtitles = state.workingOndata;
 
@@ -104,11 +104,8 @@ export const subtitleSlice = createSlice({
       if (foundSubtitle) state.subtitleToDisplay.id = foundSubtitle.id;
       else state.subtitleToDisplay.id = -1;
     },
-    setSubtitleToDisplay: (
-      state,
-      action: PayloadAction<"original" | "workingOn">
-    ) => {
-      state.subtitleToDisplay.whichOne = action.payload;
+    setSubtitleToDisplay: (state, action: PayloadAction<boolean>) => {
+      state.subtitleToDisplay.isWorkingOn = action.payload;
     },
   },
   extraReducers: (builder) => {

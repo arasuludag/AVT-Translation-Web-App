@@ -11,8 +11,8 @@ export default function GoToSecondButton(props: {
   const dispatch = useAppDispatch();
 
   const handleClick = () => {
-    if (props.readOnly) dispatch(setSubtitleToDisplay("original"));
-    else dispatch(setSubtitleToDisplay("workingOn"));
+    if (props.readOnly) dispatch(setSubtitleToDisplay(false));
+    else dispatch(setSubtitleToDisplay(true));
 
     dispatch(setVideoTime(props.ms));
   };

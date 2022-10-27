@@ -15,10 +15,10 @@ function SubtitleSection() {
       style={{ overflowY: "auto", height: "100vh" }}
       spacing={2}
     >
-      <Grid item md>
+      <Grid item md style={{ margin: "20px 20px" }}>
         <OriginalTranscript />
       </Grid>
-      <Grid item md>
+      <Grid item md style={{ margin: "20px 20px" }}>
         <WorkingTranslation />
       </Grid>
     </Grid>

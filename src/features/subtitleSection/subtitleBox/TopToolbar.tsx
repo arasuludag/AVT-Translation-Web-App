@@ -89,9 +89,9 @@ export default function TopToolbar(props: TopToolbarProps) {
             props.setTime({ start: parseInt(event.target.value) });
           }}
         />
-        <Grid item xs={12} md={2} xl={2}>
+        <Grid item xs={12} lg={12} xl={2}>
           <Stack>
-            <Typography variant="caption">
+            <Typography variant="caption" sx={{ textAlign: "center" }}>
               {msToHMS(props.time.end - props.time.start)}
             </Typography>
             <GoToSecondButton

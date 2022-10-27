@@ -26,7 +26,7 @@ export default function ShowSubtitle(props: ShownSubtitle) {
   }
 
   const showSubtitle = () => {
-    if (activeSubtitle.whichOne === "original")
+    if (!activeSubtitle.isWorkingOn)
       return transcript[
         transcript.findIndex((subtitle) => subtitle.id === activeSubtitle.id)
       ];
