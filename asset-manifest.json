@@ -1,17 +1,17 @@
 {
   "files": {
     "main.css": "/Audiovisual-Translation-Web-App/static/css/main.12525eaa.css",
-    "main.js": "/Audiovisual-Translation-Web-App/static/js/main.ebf73ce3.js",
+    "main.js": "/Audiovisual-Translation-Web-App/static/js/main.31aaffd4.js",
     "static/js/787.d8c2ac8a.chunk.js": "/Audiovisual-Translation-Web-App/static/js/787.d8c2ac8a.chunk.js",
     "static/media/video.mp4": "/Audiovisual-Translation-Web-App/static/media/video.31fdf7b24c65de31f6dc.mp4",
     "index.html": "/Audiovisual-Translation-Web-App/index.html",
-    "static/media/subtitleIcon.svg": "/Audiovisual-Translation-Web-App/static/media/subtitleIcon.88aba831aa5cec178deb4ac463db658c.svg",
+    "static/media/subtitleIcon.svg": "/Audiovisual-Translation-Web-App/static/media/subtitleIcon.9c2928f1598dc661314e225fc5c3b53d.svg",
     "main.12525eaa.css.map": "/Audiovisual-Translation-Web-App/static/css/main.12525eaa.css.map",
-    "main.ebf73ce3.js.map": "/Audiovisual-Translation-Web-App/static/js/main.ebf73ce3.js.map",
+    "main.31aaffd4.js.map": "/Audiovisual-Translation-Web-App/static/js/main.31aaffd4.js.map",
     "787.d8c2ac8a.chunk.js.map": "/Audiovisual-Translation-Web-App/static/js/787.d8c2ac8a.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.12525eaa.css",
-    "static/js/main.ebf73ce3.js"
+    "static/js/main.31aaffd4.js"
   ]
 }
