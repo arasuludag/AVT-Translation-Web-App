@@ -12,7 +12,7 @@ export default function CharacterPerSecond(props: {
 
   const recievedCPS = useAppSelector(selectCPS);
 
-  const totalBoxLength = props.text.length;
+  const totalBoxLength = props.text.replace(/\n/g, "").length;
 
   useEffect(() => {
     // If "|| 0" isn't there, it causes a NaN on some edge cases.

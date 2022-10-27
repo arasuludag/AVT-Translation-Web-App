@@ -22,9 +22,19 @@ export interface Settings {
 
 // Version is here to trigger state change.
 const initialState: Settings = {
-  boxSettings: { cpl: 30, cps: 17 },
-  videoSettings: { seekAmount: 40 },
-  themeSettings: { isDark: true },
+  boxSettings: {
+    cpl: parseInt(localStorage.getItem("cpl") || "") || 30,
+    cps: parseInt(localStorage.getItem("cps") || "") || 17,
+  },
+  videoSettings: {
+    seekAmount: parseInt(localStorage.getItem("seekAmount") || "") || 40,
+  },
+  themeSettings: {
+    isDark:
+      localStorage.getItem("isDark") === null
+        ? true
+        : localStorage.getItem("isDark") === "true",
+  },
 };
 
 export const settingsSlice = createSlice({
@@ -33,15 +43,25 @@ export const settingsSlice = createSlice({
   reducers: {
     setBoxSettings: (state, action: PayloadAction<Partial<BoxSettings>>) => {
       state.boxSettings = { ...state.boxSettings, ...action.payload };
+
+      localStorage.setItem("cpl", state.boxSettings.cpl.toString());
+      localStorage.setItem("cps", state.boxSettings.cps.toString());
     },
     setVideoSettings: (
       state,
       action: PayloadAction<Partial<VideoSettings>>
     ) => {
       state.videoSettings = { ...state.videoSettings, ...action.payload };
+
+      localStorage.setItem(
+        "seekAmount",
+        state.videoSettings.seekAmount.toString()
+      );
     },
     setTheme: (state, action: PayloadAction<boolean>) => {
       state.themeSettings = { isDark: action.payload };
+
+      localStorage.setItem("isDark", state.themeSettings.isDark.toString());
     },
   },
 });

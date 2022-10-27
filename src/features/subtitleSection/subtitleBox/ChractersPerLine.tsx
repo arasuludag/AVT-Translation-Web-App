@@ -18,6 +18,7 @@ export default function CharacterPerLine(props: { text: string }) {
           <Chip
             key={index}
             label={line.length}
+            title="Chracters per line"
             variant="filled"
             sx={{ margin: "2px 0", opacity: "50%" }}
             style={{ backgroundColor: color }}
