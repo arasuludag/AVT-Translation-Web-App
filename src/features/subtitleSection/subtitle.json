@@ -3,7 +3,7 @@
     "start_time": 3400,
     "end_time": 5000,
     "text": "<p><em>Lorem ipsum dolor</em> sit amet,</p><p>consectetur adipiscing elit.</p>",
-    "note": "Sample note",
+    "note": "<p>Sample note</p><p><em>Multiple lines.</em></p>",
     "position": 1
   },
   {
@@ -17,7 +17,7 @@
     "start_time": 10000,
     "end_time": 13655,
     "text": "<p>Aenean accumsan sit amet mi in ornare.</p>",
-    "note": "Google this etc.",
+    "note": "<p>Google this etc.</p>",
     "position": 1
   },
   {

@@ -1,9 +1,8 @@
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import ReactQuill from "react-quill";
-import "react-quill/dist/quill.snow.css";
+import "react-quill/dist/quill.bubble.css";
 
-import Alert from "@mui/material/Alert";
 import {
   insertToSubtitle,
   selectActiveSubtitle,
@@ -11,11 +10,12 @@ import {
 } from "../subtitleSlice";
 import { useAppDispatch, useAppSelector } from "../../../app/hooks";
 import { useEffect, useMemo, useState } from "react";
-import { Grid } from "@mui/material";
+import { CardActions, Grid } from "@mui/material";
 
 import ChractersPerLine from "./ChractersPerLine";
 import TopToolbar from "./TopToolbar";
 import BottomToolbar from "./bottomToolbar/BottomToolbar";
+import DisplayNote from "./bottomToolbar/DisplayNote";
 
 const h2p = require("html2plaintext");
 
@@ -62,7 +62,7 @@ function SubtitleBox(props: ChildComponentProps) {
       <Grid container>
         <Grid item xs={10}>
           <ReactQuill
-            theme="snow"
+            theme="bubble"
             className="editor"
             value={text}
             onChange={(value) => {
@@ -78,25 +78,17 @@ function SubtitleBox(props: ChildComponentProps) {
             }}
             readOnly={props.readOnly}
             modules={{
-              toolbar: [["bold", "italic", "underline"], ["clean"]],
+              toolbar: props.readOnly
+                ? []
+                : [["bold", "italic", "underline"], ["clean"]],
             }}
-            formats={["bold", "italic", "underline"]}
+            formats={props.readOnly ? [] : ["bold", "italic", "underline"]}
           />
         </Grid>
         <ChractersPerLine text={h2p(text)} />
       </Grid>
     ),
     [dispatch, text, props.readOnly, props.subtitle.id]
-  );
-
-  const optimizedNoteDisplay = useMemo(
-    () =>
-      props.readOnly && props.subtitle.note ? (
-        <Alert sx={{ borderRadius: 5 }} severity="info">
-          {props.subtitle.note}
-        </Alert>
-      ) : null,
-    [props.readOnly, props.subtitle.note]
   );
 
   const optimizedBottomToolbar = useMemo(
@@ -111,7 +103,7 @@ function SubtitleBox(props: ChildComponentProps) {
     <Card
       raised={raised}
       sx={{
-        minHeight: 320,
+        minHeight: 255,
         maxWidth: 600,
         margin: "20px auto",
         borderRadius: 5,
@@ -120,8 +112,12 @@ function SubtitleBox(props: ChildComponentProps) {
       <CardContent>
         {optimizedTopToolbar}
         {optimizedEditor}
-        {optimizedNoteDisplay}
-        {optimizedBottomToolbar}
+        <CardActions>
+          {props.readOnly && props.subtitle.note ? (
+            <DisplayNote text={props.subtitle.note} />
+          ) : null}
+          {optimizedBottomToolbar}
+        </CardActions>
       </CardContent>
     </Card>
   );

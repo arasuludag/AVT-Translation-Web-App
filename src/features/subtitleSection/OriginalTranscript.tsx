@@ -15,9 +15,7 @@ function OriginalTranscript() {
 
   useEffect(() => {
     dispatch(fetchOriginalTranscript(""));
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [dispatch]);
 
   const optimizedSubtitleMap = useMemo(
     () =>

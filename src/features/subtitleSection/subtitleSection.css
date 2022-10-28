@@ -10,17 +10,20 @@
 
 .ql-editor {
   font-size: 16px;
-  line-height: 32px;
+  line-height: 22px;
 }
 
 .editor {
-  text-align: start;
   height: 100%;
   width: 100%;
 }
 
+.ql-bubble * {
+  z-index: 1;
+}
+
 .ql-container {
-  height: 120px;
+  height: 100px;
 }
 
 .ql-snow {

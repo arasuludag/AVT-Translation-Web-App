@@ -2,19 +2,18 @@ import { useAppDispatch } from "../../../../app/hooks";
 import { insertToSubtitle } from "../../subtitleSlice";
 import { useState } from "react";
 import {
-  Alert,
   Button,
   Dialog,
   DialogActions,
   DialogContent,
   DialogTitle,
   IconButton,
-  TextField,
-  Typography,
 } from "@mui/material";
 import ModeCommentIcon from "@mui/icons-material/ModeComment";
 import InsertCommentIcon from "@mui/icons-material/InsertComment";
 import { useSnackbar } from "notistack";
+import ReactQuill from "react-quill";
+import "react-quill/dist/quill.bubble.css";
 
 export default function AddNote(props: { id: number; note: string }) {
   const dispatch = useAppDispatch();
@@ -36,7 +35,7 @@ export default function AddNote(props: { id: number; note: string }) {
   };
 
   const handleSubmit = () => {
-    enqueueSnackbar(`Added this note: ${text}`, {
+    enqueueSnackbar(`Note added`, {
       variant: "success",
     });
     setOpen(false);
@@ -58,18 +57,14 @@ export default function AddNote(props: { id: number; note: string }) {
       <Dialog open={open} onClose={handleClose}>
         <DialogTitle>Comment / Note</DialogTitle>
 
-        <DialogContent sx={{ minWidth: "400px" }}>
-          <Typography>Preview:</Typography>
-          <Alert severity="info">{text}</Alert>
-          <TextField
-            autoFocus
-            multiline
-            defaultValue={text}
-            id="name"
-            onChange={(event) => {
-              setText(event.target.value);
+        <DialogContent>
+          <ReactQuill
+            theme="bubble"
+            className="editor"
+            value={text}
+            onChange={(value) => {
+              setText(value);
             }}
-            fullWidth
           />
         </DialogContent>
         <DialogActions>

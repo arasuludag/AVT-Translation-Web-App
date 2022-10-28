@@ -59,36 +59,38 @@ export default function TopToolbar(props: TopToolbarProps) {
       <Grid
         container
         direction="row"
-        justifyContent="center"
+        justifyContent="space-around"
         alignItems="center"
       >
-        <TextField
-          sx={{ width: "18ch", margin: 1 }}
-          id="outlined-number"
-          label={msToHMS(props.time.start)}
-          type="number"
-          error={error.start}
-          defaultValue={props.time.start || 0}
-          InputLabelProps={{
-            shrink: true,
-          }}
-          InputProps={{
-            endAdornment: <InputAdornment position="end">ms</InputAdornment>,
-          }}
-          disabled={props.readOnly}
-          size="small"
-          onChange={(event) => {
-            dispatch(
-              insertToSubtitle({
-                subtitle: {
-                  start_time: parseInt(event.target.value),
-                },
-                id: props.id,
-              })
-            );
-            props.setTime({ start: parseInt(event.target.value) });
-          }}
-        />
+        <Grid item xs={5} md={5} xl={5}>
+          <TextField
+            sx={{ width: "19ch", margin: 1 }}
+            id="outlined-number"
+            label={msToHMS(props.time.start)}
+            type="number"
+            error={error.start}
+            defaultValue={props.time.start || 0}
+            InputLabelProps={{
+              shrink: true,
+            }}
+            InputProps={{
+              endAdornment: <InputAdornment position="end">ms</InputAdornment>,
+            }}
+            disabled={props.readOnly}
+            size="small"
+            onChange={(event) => {
+              dispatch(
+                insertToSubtitle({
+                  subtitle: {
+                    start_time: parseInt(event.target.value),
+                  },
+                  id: props.id,
+                })
+              );
+              props.setTime({ start: parseInt(event.target.value) });
+            }}
+          />
+        </Grid>
         <Grid item xs={12} md={2} xl={2}>
           <Stack>
             <Typography variant="caption" sx={{ textAlign: "center" }}>
@@ -100,33 +102,35 @@ export default function TopToolbar(props: TopToolbarProps) {
             />
           </Stack>
         </Grid>
-        <TextField
-          sx={{ width: "18ch", margin: 1 }}
-          id="outlined-number"
-          label={msToHMS(props.time.end)}
-          type="number"
-          error={error.end}
-          defaultValue={props.time.end || 0}
-          InputLabelProps={{
-            shrink: true,
-          }}
-          InputProps={{
-            endAdornment: <InputAdornment position="end">ms</InputAdornment>,
-          }}
-          disabled={props.readOnly}
-          size="small"
-          onChange={(event) => {
-            dispatch(
-              insertToSubtitle({
-                subtitle: {
-                  end_time: parseInt(event.target.value),
-                },
-                id: props.id,
-              })
-            );
-            props.setTime({ end: parseInt(event.target.value) });
-          }}
-        />
+        <Grid item xs={5} md={5} xl={5}>
+          <TextField
+            sx={{ width: "19ch", margin: 1 }}
+            id="outlined-number"
+            label={msToHMS(props.time.end)}
+            type="number"
+            error={error.end}
+            defaultValue={props.time.end || 0}
+            InputLabelProps={{
+              shrink: true,
+            }}
+            InputProps={{
+              endAdornment: <InputAdornment position="end">ms</InputAdornment>,
+            }}
+            disabled={props.readOnly}
+            size="small"
+            onChange={(event) => {
+              dispatch(
+                insertToSubtitle({
+                  subtitle: {
+                    end_time: parseInt(event.target.value),
+                  },
+                  id: props.id,
+                })
+              );
+              props.setTime({ end: parseInt(event.target.value) });
+            }}
+          />
+        </Grid>
       </Grid>
     ),
     [dispatch, error.end, error.start, props]

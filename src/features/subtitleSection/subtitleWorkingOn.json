@@ -10,7 +10,7 @@
     "start_time": 6177,
     "end_time": 10000,
     "text": "<p>This is a sample box that was</p><p>meant to imitate a previous save.</p>",
-    "note": "A note that was added before.",
+    "note": "<p>A note that was added before.</p>",
     "position": 1
   },
   {

@@ -1,4 +1,4 @@
-import { CardActions, Grid } from "@mui/material";
+import { Grid } from "@mui/material";
 import { useMemo } from "react";
 import { Subtitle } from "../../subtitleSlice";
 import AddBox from "./AddBox";
@@ -25,26 +25,24 @@ export default function BottomToolbar(props: ChildComponentProps) {
   );
 
   return (
-    <CardActions>
+    <Grid
+      container
+      direction="row"
+      justifyContent="space-between"
+      alignItems="center"
+    >
       <Grid
         container
         direction="row"
-        justifyContent="space-between"
+        justifyContent="flex-start"
         alignItems="center"
+        item
+        xs
       >
-        <Grid
-          container
-          direction="row"
-          justifyContent="flex-start"
-          alignItems="center"
-          item
-          xs
-        >
-          {toolbarElements}
-          <ChractersPerSecond text={props.text} time={props.time} />
-        </Grid>
-        <DeleteBox id={props.subtitle.id} />
+        {toolbarElements}
+        <ChractersPerSecond text={props.text} time={props.time} />
       </Grid>
-    </CardActions>
+      <DeleteBox id={props.subtitle.id} />
+    </Grid>
   );
 }

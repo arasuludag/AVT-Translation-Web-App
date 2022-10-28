@@ -20,7 +20,13 @@ export default function CharacterPerLine(props: { text: string }) {
             label={line.length}
             title="Chracters per line"
             variant="filled"
-            sx={{ margin: "2px 0", opacity: "50%" }}
+            sx={{
+              margin: "2px 0",
+              opacity: "50%",
+              width: "40px",
+              height: "20px",
+              overflow: "visible",
+            }}
             style={{ backgroundColor: color }}
           />
         );
@@ -36,7 +42,7 @@ export default function CharacterPerLine(props: { text: string }) {
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
-        margin: "46px 0 0 0",
+        margin: "8px 0 0 0",
       }}
     >
       {characterPerLine}
