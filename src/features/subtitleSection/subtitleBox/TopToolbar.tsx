@@ -56,80 +56,73 @@ export default function TopToolbar(props: TopToolbarProps) {
 
   const topToolbar = useMemo(
     () => (
-      <Grid
-        container
-        direction="row"
-        justifyContent="space-around"
-        alignItems="center"
-      >
-        <Grid item xs={5} md={5} xl={5}>
-          <TextField
-            id="outlined-number"
-            label={msToHMS(props.time.start)}
-            type="number"
-            error={error.start}
-            defaultValue={props.time.start || 0}
-            InputLabelProps={{
-              shrink: true,
-            }}
-            InputProps={{
-              endAdornment: <InputAdornment position="end">ms</InputAdornment>,
-            }}
-            disabled={props.readOnly}
-            size="small"
-            onChange={(event) => {
-              dispatch(
-                insertToSubtitle({
-                  subtitle: {
-                    start_time: parseInt(event.target.value),
-                  },
-                  id: props.id,
-                })
-              );
-              props.setTime({ start: parseInt(event.target.value) });
-            }}
+      <Stack direction="row" justifyContent="center" alignItems="center">
+        <TextField
+          sx={{ maxWidth: "18ch", margin: "5px 5px 0 0" }}
+          id="outlined-number"
+          label={msToHMS(props.time.start)}
+          type="number"
+          error={error.start}
+          defaultValue={props.time.start || 0}
+          InputLabelProps={{
+            shrink: true,
+          }}
+          InputProps={{
+            endAdornment: <InputAdornment position="end">ms</InputAdornment>,
+          }}
+          disabled={props.readOnly}
+          size="small"
+          onChange={(event) => {
+            dispatch(
+              insertToSubtitle({
+                subtitle: {
+                  start_time: parseInt(event.target.value),
+                },
+                id: props.id,
+              })
+            );
+            props.setTime({ start: parseInt(event.target.value) });
+          }}
+        />
+
+        <Stack>
+          <Typography variant="caption" sx={{ textAlign: "center" }}>
+            {msToHMS(props.time.end - props.time.start)}
+          </Typography>
+          <GoToSecondButton
+            ms={props.time.start || 0}
+            readOnly={props.readOnly}
           />
-        </Grid>
-        <Grid item xs={12} md={2} xl={2}>
-          <Stack>
-            <Typography variant="caption" sx={{ textAlign: "center" }}>
-              {msToHMS(props.time.end - props.time.start)}
-            </Typography>
-            <GoToSecondButton
-              ms={props.time.start || 0}
-              readOnly={props.readOnly}
-            />
-          </Stack>
-        </Grid>
-        <Grid item xs={5} md={5} xl={5}>
-          <TextField
-            id="outlined-number"
-            label={msToHMS(props.time.end)}
-            type="number"
-            error={error.end}
-            defaultValue={props.time.end || 0}
-            InputLabelProps={{
-              shrink: true,
-            }}
-            InputProps={{
-              endAdornment: <InputAdornment position="end">ms</InputAdornment>,
-            }}
-            disabled={props.readOnly}
-            size="small"
-            onChange={(event) => {
-              dispatch(
-                insertToSubtitle({
-                  subtitle: {
-                    end_time: parseInt(event.target.value),
-                  },
-                  id: props.id,
-                })
-              );
-              props.setTime({ end: parseInt(event.target.value) });
-            }}
-          />
-        </Grid>
-      </Grid>
+        </Stack>
+
+        <TextField
+          sx={{ maxWidth: "18ch", margin: "5px 0 0 5px" }}
+          id="outlined-number"
+          label={msToHMS(props.time.end)}
+          type="number"
+          error={error.end}
+          defaultValue={props.time.end || 0}
+          InputLabelProps={{
+            shrink: true,
+          }}
+          InputProps={{
+            endAdornment: <InputAdornment position="end">ms</InputAdornment>,
+          }}
+          disabled={props.readOnly}
+          size="small"
+          onChange={(event) => {
+            dispatch(
+              insertToSubtitle({
+                subtitle: {
+                  end_time: parseInt(event.target.value),
+                },
+                id: props.id,
+              })
+            );
+            props.setTime({ end: parseInt(event.target.value) });
+          }}
+        />
+      </Stack>
     ),
     [dispatch, error.end, error.start, props]
   );

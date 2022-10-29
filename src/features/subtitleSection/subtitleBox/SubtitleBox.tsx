@@ -10,12 +10,11 @@ import {
 } from "../subtitleSlice";
 import { useAppDispatch, useAppSelector } from "../../../app/hooks";
 import { useEffect, useMemo, useState } from "react";
-import { CardActions, Grid } from "@mui/material";
+import { CardActions, Stack } from "@mui/material";
 
 import ChractersPerLine from "./ChractersPerLine";
 import TopToolbar from "./TopToolbar";
 import BottomToolbar from "./bottomToolbar/BottomToolbar";
-import DisplayNote from "./bottomToolbar/DisplayNote";
 
 const h2p = require("html2plaintext");
 
@@ -59,43 +58,43 @@ function SubtitleBox(props: ChildComponentProps) {
 
   const optimizedEditor = useMemo(
     () => (
-      <Grid container>
-        <Grid item xs={10}>
-          <ReactQuill
-            theme="bubble"
-            className="editor"
-            value={text}
-            onChange={(value) => {
-              dispatch(
-                insertToSubtitle({
-                  subtitle: {
-                    text: value,
-                  },
-                  id: props.subtitle.id,
-                })
-              );
-              setText(value);
-            }}
-            readOnly={props.readOnly}
-            modules={{
-              toolbar: props.readOnly
-                ? []
-                : [["bold", "italic", "underline"], ["clean"]],
-            }}
-            formats={props.readOnly ? [] : ["bold", "italic", "underline"]}
-          />
-        </Grid>
+      <Stack direction="row">
+        <ReactQuill
+          theme="bubble"
+          className="editor"
+          value={text}
+          onChange={(value) => {
+            dispatch(
+              insertToSubtitle({
+                subtitle: {
+                  text: value,
+                },
+                id: props.subtitle.id,
+              })
+            );
+            setText(value);
+          }}
+          readOnly={props.readOnly}
+          modules={{
+            toolbar: [["bold", "italic", "underline"], ["clean"]],
+          }}
+          formats={["bold", "italic", "underline"]}
+        />
         <ChractersPerLine text={h2p(text)} />
-      </Grid>
+      </Stack>
     ),
     [dispatch, text, props.readOnly, props.subtitle.id]
   );
 
   const optimizedBottomToolbar = useMemo(
-    () =>
-      !props.readOnly ? (
-        <BottomToolbar subtitle={props.subtitle} time={time} text={h2p(text)} />
-      ) : null,
+    () => (
+      <BottomToolbar
+        subtitle={props.subtitle}
+        time={time}
+        text={h2p(text)}
+        readOnly={props.readOnly}
+      />
+    ),
     [props.readOnly, props.subtitle, time, text]
   );
 
@@ -103,8 +102,7 @@ function SubtitleBox(props: ChildComponentProps) {
     <Card
       raised={raised}
       sx={{
-        minHeight: 255,
-        maxWidth: 450,
+        minHeight: 245,
         margin: "20px 5px",
         borderRadius: 5,
       }}
@@ -112,12 +110,7 @@ function SubtitleBox(props: ChildComponentProps) {
       <CardContent>
         {optimizedTopToolbar}
         {optimizedEditor}
-        <CardActions>
-          {props.readOnly && props.subtitle.note ? (
-            <DisplayNote text={props.subtitle.note} />
-          ) : null}
-          {optimizedBottomToolbar}
-        </CardActions>
+        <CardActions>{optimizedBottomToolbar}</CardActions>
       </CardContent>
     </Card>
   );

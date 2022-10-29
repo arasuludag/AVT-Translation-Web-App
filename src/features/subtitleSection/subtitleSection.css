@@ -9,8 +9,9 @@
 }
 
 .ql-editor {
-  font-size: 14px;
+  font-size: 16px;
   line-height: 22px;
+  padding: 5px 5px;
 }
 
 .editor {

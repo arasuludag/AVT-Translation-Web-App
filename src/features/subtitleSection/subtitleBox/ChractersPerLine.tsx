@@ -1,4 +1,4 @@
-import { Chip, Grid } from "@mui/material";
+import { Chip, Stack } from "@mui/material";
 import { useMemo } from "react";
 import { useAppSelector } from "../../../app/hooks";
 import { selectCPL } from "../../settings/settingsSlice";
@@ -10,6 +10,7 @@ export default function CharacterPerLine(props: { text: string }) {
     () =>
       props.text.split("\n").map((line, index) => {
         const lineLength = line.length;
+        if (index > 4) return null; // We shouldn't have more than 3 rows.
         if (lineLength === 0) return null;
         let color = undefined;
         if (lineLength >= recievedCPL + 15) color = "Maroon";
@@ -35,17 +36,12 @@ export default function CharacterPerLine(props: { text: string }) {
   );
 
   return (
-    <Grid
-      item
-      xs={2}
+    <Stack
       sx={{
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-        margin: "8px 0 0 0",
+        margin: "3px 0 0 0",
       }}
     >
       {characterPerLine}
-    </Grid>
+    </Stack>
   );
 }
