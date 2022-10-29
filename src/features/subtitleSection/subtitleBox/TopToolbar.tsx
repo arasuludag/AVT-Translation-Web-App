@@ -64,7 +64,6 @@ export default function TopToolbar(props: TopToolbarProps) {
       >
         <Grid item xs={5} md={5} xl={5}>
           <TextField
-            sx={{ width: "19ch", margin: 1 }}
             id="outlined-number"
             label={msToHMS(props.time.start)}
             type="number"
@@ -104,7 +103,6 @@ export default function TopToolbar(props: TopToolbarProps) {
         </Grid>
         <Grid item xs={5} md={5} xl={5}>
           <TextField
-            sx={{ width: "19ch", margin: 1 }}
             id="outlined-number"
             label={msToHMS(props.time.end)}
             type="number"

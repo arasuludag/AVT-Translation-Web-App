@@ -39,8 +39,9 @@ function App() {
           justifyContent="center"
           alignItems="flex-start"
           className="App"
+          spacing={1}
         >
-          <Grid item xs={12} lg={12} xl={5}>
+          <Grid item xs={12} md={8} lg={8} xl={5}>
             <VideoPlayer />
           </Grid>
           <Grid item xs={12} lg={12} xl={7}>

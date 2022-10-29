@@ -14,12 +14,9 @@ function SubtitleSection() {
       alignItems="flex-start"
       style={{ overflowY: "auto", height: "100vh" }}
     >
-      <Grid item style={{ margin: "20px 20px" }}>
-        <OriginalTranscript />
-      </Grid>
-      <Grid item style={{ margin: "20px 20px" }}>
-        <WorkingTranslation />
-      </Grid>
+      <OriginalTranscript />
+
+      <WorkingTranslation />
     </Grid>
   );
 }
