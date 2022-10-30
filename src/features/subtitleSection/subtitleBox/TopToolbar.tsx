@@ -1,10 +1,4 @@
-import {
-  Grid,
-  InputAdornment,
-  Stack,
-  TextField,
-  Typography,
-} from "@mui/material";
+import { InputAdornment, Stack, TextField, Typography } from "@mui/material";
 import { useEffect, useMemo, useState } from "react";
 import { useAppDispatch, useAppSelector } from "../../../app/hooks";
 import { insertToSubtitle, selectSubtitleTimings } from "../subtitleSlice";
@@ -25,7 +19,7 @@ interface TopToolbarProps {
 function msToHMS(ms: number) {
   if (ms > 86399999) return "< 1 day";
   if (ms > 0) return new Date(ms).toISOString().slice(11, 21);
-  else return "";
+  else return "≥ 0";
 }
 
 export default function TopToolbar(props: TopToolbarProps) {
@@ -56,7 +50,7 @@ export default function TopToolbar(props: TopToolbarProps) {
 
   const topToolbar = useMemo(
     () => (
-      <Stack direction="row" justifyContent="center" alignItems="center">
+      <Stack direction="row" justifyContent="space-between" alignItems="center">
         <TextField
           sx={{ maxWidth: "18ch", margin: "5px 5px 0 0" }}
           id="outlined-number"
@@ -73,6 +67,9 @@ export default function TopToolbar(props: TopToolbarProps) {
           disabled={props.readOnly}
           size="small"
           onChange={(event) => {
+            props.setTime({ start: parseInt(event.target.value) });
+          }}
+          onBlur={(event) =>
             dispatch(
               insertToSubtitle({
                 subtitle: {
@@ -80,9 +77,8 @@ export default function TopToolbar(props: TopToolbarProps) {
                 },
                 id: props.id,
               })
-            );
-            props.setTime({ start: parseInt(event.target.value) });
-          }}
+            )
+          }
         />
 
         <Stack>
@@ -111,6 +107,9 @@ export default function TopToolbar(props: TopToolbarProps) {
           disabled={props.readOnly}
           size="small"
           onChange={(event) => {
+            props.setTime({ end: parseInt(event.target.value) });
+          }}
+          onBlur={(event) =>
             dispatch(
               insertToSubtitle({
                 subtitle: {
@@ -118,9 +117,8 @@ export default function TopToolbar(props: TopToolbarProps) {
                 },
                 id: props.id,
               })
-            );
-            props.setTime({ end: parseInt(event.target.value) });
-          }}
+            )
+          }
         />
       </Stack>
     ),
