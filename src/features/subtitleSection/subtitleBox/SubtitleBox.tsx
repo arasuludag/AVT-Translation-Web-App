@@ -54,7 +54,10 @@ function SubtitleBox(props: ChildComponentProps) {
       ((!subtitleToScrollInto.subtitle.isWorkingOn && props.readOnly) ||
         (subtitleToScrollInto.subtitle.isWorkingOn && !props.readOnly))
     )
-      subtitleBoxRef.current?.scrollIntoView();
+      subtitleBoxRef.current?.scrollIntoView({
+        behavior: "smooth",
+        block: "center",
+      });
   }, [
     props.readOnly,
     props.subtitle.id,
