@@ -34,7 +34,10 @@ export default function TopToolbar(props: TopToolbarProps) {
   useEffect(() => {
     function checkConflicts(time: number) {
       return subtitles.some(
-        (subtitle) => subtitle.start_time < time && subtitle.end_time > time
+        (subtitle) =>
+          subtitle.id !== props.id &&
+          subtitle.start_time < time &&
+          subtitle.end_time > time
       );
     }
     if (!props.readOnly) {
@@ -46,7 +49,7 @@ export default function TopToolbar(props: TopToolbarProps) {
           end: checkConflicts(props.time.end),
         });
     }
-  }, [props.readOnly, props.time.end, props.time.start, subtitles]);
+  }, [props.id, props.readOnly, props.time.end, props.time.start, subtitles]);
 
   const topToolbar = useMemo(
     () => (

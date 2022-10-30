@@ -26,6 +26,10 @@ export interface SubtitleFetch {
   workingOndata: Subtitle[];
   subtitleToDisplay: { isWorkingOn: boolean; id: number };
   nextFreeID: number;
+  subtitleToScrollInto: {
+    version: number;
+    subtitle: { isWorkingOn: boolean; id: number };
+  };
   transcriptStatus: "idle" | "loading" | "failed";
   workingOnSubtitleStatus: "idle" | "loading" | "failed";
 }
@@ -34,6 +38,10 @@ const initialState: SubtitleFetch = {
   transcriptData: [],
   workingOndata: [],
   subtitleToDisplay: { isWorkingOn: false, id: -1 },
+  subtitleToScrollInto: {
+    version: 0,
+    subtitle: { isWorkingOn: false, id: -1 },
+  },
   nextFreeID: 0,
   transcriptStatus: "idle",
   workingOnSubtitleStatus: "idle",
@@ -107,6 +115,13 @@ export const subtitleSlice = createSlice({
     setSubtitleToDisplay: (state, action: PayloadAction<boolean>) => {
       state.subtitleToDisplay.isWorkingOn = action.payload;
     },
+    setSubtitleToScrollInto: (
+      state,
+      action: PayloadAction<{ isWorkingOn: boolean; id: number }>
+    ) => {
+      state.subtitleToScrollInto.subtitle = action.payload;
+      state.subtitleToScrollInto.version++;
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -169,6 +184,7 @@ export const {
   insertBox,
   setActiveSubtitle,
   setSubtitleToDisplay,
+  setSubtitleToScrollInto,
   deleteBox,
 } = subtitleSlice.actions;
 
@@ -181,6 +197,8 @@ export const selectActiveSubtitle = (state: RootState) =>
 export const selectSubtitleCount = (state: RootState) =>
   state.subtitle.workingOndata.length;
 export const selectSubtitleTimings = (state: RootState) =>
-  state.subtitle.workingOndata.map(({ id, note, text, ...timings }) => timings);
+  state.subtitle.workingOndata.map(({ note, text, ...timings }) => timings);
+export const selectSubtitleToScrollInto = (state: RootState) =>
+  state.subtitle.subtitleToScrollInto;
 
 export default subtitleSlice.reducer;

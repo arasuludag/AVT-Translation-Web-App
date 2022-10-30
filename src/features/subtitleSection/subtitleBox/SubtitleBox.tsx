@@ -6,10 +6,11 @@ import "react-quill/dist/quill.bubble.css";
 import {
   insertToSubtitle,
   selectActiveSubtitle,
+  selectSubtitleToScrollInto,
   Subtitle,
 } from "../subtitleSlice";
 import { useAppDispatch, useAppSelector } from "../../../app/hooks";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { CardActions, Stack } from "@mui/material";
 
 import ChractersPerLine from "./ChractersPerLine";
@@ -26,6 +27,7 @@ interface ChildComponentProps {
 function SubtitleBox(props: ChildComponentProps) {
   const dispatch = useAppDispatch();
   const activeSubtitle = useAppSelector(selectActiveSubtitle);
+  const subtitleToScrollInto = useAppSelector(selectSubtitleToScrollInto);
   const [text, setText] = useState(props.subtitle.text);
   const [time, setTime] = useState({
     start: props.subtitle.start_time,
@@ -33,6 +35,8 @@ function SubtitleBox(props: ChildComponentProps) {
   }); // For the "Goto button" and other componenents that need updated time.
 
   const [raised, setRaised] = useState(false);
+
+  const subtitleBoxRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (
@@ -43,6 +47,21 @@ function SubtitleBox(props: ChildComponentProps) {
       setRaised(true);
     else setRaised(false);
   }, [activeSubtitle, props.readOnly, props.subtitle.id]);
+
+  useEffect(() => {
+    if (
+      subtitleToScrollInto.subtitle.id === props.subtitle.id &&
+      ((!subtitleToScrollInto.subtitle.isWorkingOn && props.readOnly) ||
+        (subtitleToScrollInto.subtitle.isWorkingOn && !props.readOnly))
+    )
+      subtitleBoxRef.current?.scrollIntoView();
+  }, [
+    props.readOnly,
+    props.subtitle.id,
+    subtitleToScrollInto.subtitle.id,
+    subtitleToScrollInto.subtitle.isWorkingOn,
+    subtitleToScrollInto.version,
+  ]);
 
   const optimizedTopToolbar = useMemo(
     () => (
@@ -100,6 +119,7 @@ function SubtitleBox(props: ChildComponentProps) {
 
   return (
     <Card
+      ref={subtitleBoxRef}
       raised={raised}
       sx={{
         minHeight: 245,

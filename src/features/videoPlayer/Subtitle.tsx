@@ -1,8 +1,9 @@
-import { useAppSelector } from "../../app/hooks";
+import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import {
   selectActiveSubtitle,
   selectSubtitles,
   selectTranscript,
+  setSubtitleToScrollInto,
 } from "../subtitleSection/subtitleSlice";
 import parse from "html-react-parser";
 
@@ -11,6 +12,7 @@ interface ShownSubtitle {
 }
 
 export default function ShowSubtitle(props: ShownSubtitle) {
+  const dispatch = useAppDispatch();
   const activeSubtitle = useAppSelector(selectActiveSubtitle);
   const subtitle = useAppSelector(selectSubtitles);
   const transcript = useAppSelector(selectTranscript);
@@ -43,6 +45,10 @@ export default function ShowSubtitle(props: ShownSubtitle) {
         top: scale(showSubtitle()?.position || 1, 1, 10, 80, 10) + "%",
         fontSize: props.playerWidth / 30,
       }}
+      onClick={() => {
+        dispatch(setSubtitleToScrollInto(activeSubtitle));
+      }}
+      title="Scroll to box"
     >
       {parse(showSubtitle()?.text || "")}
     </div>
