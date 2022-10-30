@@ -39,16 +39,8 @@ function App() {
           justifyContent="center"
           alignItems="flex-start"
           className="App"
-          spacing={2}
         >
-          <Grid
-            item
-            xs={12}
-            md={8}
-            lg={8}
-            xl={5}
-            sx={{ backgroundColor: "black" }}
-          >
+          <Grid item xs={12} md={8} lg={8} xl sx={{ backgroundColor: "black" }}>
             <VideoPlayer />
           </Grid>
           <Grid item xs={12} md={12} lg={12} xl={7}>

@@ -43,9 +43,15 @@ function SubtitleBox(props: ChildComponentProps) {
       activeSubtitle.id === props.subtitle.id &&
       ((!activeSubtitle.isWorkingOn && props.readOnly) ||
         (activeSubtitle.isWorkingOn && !props.readOnly))
-    )
+    ) {
       setRaised(true);
-    else setRaised(false);
+
+      if (activeSubtitle.tracked)
+        subtitleBoxRef.current?.scrollIntoView({
+          behavior: "smooth",
+          block: "center",
+        });
+    } else setRaised(false);
   }, [activeSubtitle, props.readOnly, props.subtitle.id]);
 
   useEffect(() => {
@@ -126,7 +132,8 @@ function SubtitleBox(props: ChildComponentProps) {
       raised={raised}
       sx={{
         minHeight: 245,
-        margin: "20px 5px",
+        minWidth: 450,
+        margin: "10px 5px",
         borderRadius: 5,
       }}
     >

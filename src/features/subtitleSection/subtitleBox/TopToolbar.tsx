@@ -53,7 +53,7 @@ export default function TopToolbar(props: TopToolbarProps) {
 
   const topToolbar = useMemo(
     () => (
-      <Stack direction="row" justifyContent="space-between" alignItems="center">
+      <Stack direction="row" justifyContent="space-around" alignItems="center">
         <TextField
           sx={{ maxWidth: "18ch", margin: "5px 5px 0 0" }}
           id="outlined-number"

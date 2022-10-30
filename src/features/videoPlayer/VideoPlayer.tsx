@@ -4,7 +4,7 @@ import { setActiveSubtitle } from "../subtitleSection/subtitleSlice";
 
 import "./videoPlayer.css";
 
-import { selectVideoTime } from "./videoSlice";
+import { selectVideoTime, setVideoHeight } from "./videoSlice";
 import { Grid } from "@mui/material";
 import Subtitle from "./Subtitle";
 import Settings from "../settings/Settings";
@@ -37,6 +37,10 @@ function VideoPlayer(): JSX.Element {
   useEffect(() => {
     dispatch(setActiveSubtitle(currentTime));
   }, [currentTime, dispatch]);
+
+  useEffect(() => {
+    dispatch(setVideoHeight(player.current?.offsetHeight || 0));
+  }, [dispatch, player.current?.offsetHeight]);
 
   // Forward or backward time.
   function onSeek(direction: boolean, howMuch: number) {

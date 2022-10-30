@@ -2,6 +2,7 @@ import { Stack } from "@mui/material";
 import SeekBackOrForward from "./SeekBackOrForwardButtons";
 import ShowCurrentTime from "./ShowCurrentTime";
 import SubtitleToggle from "./SubtitleToggle";
+import TrackingToggle from "./TrackingToggle";
 
 interface ChildComponentProps {
   currentTime: number;
@@ -17,11 +18,14 @@ export default function VideoControl(props: ChildComponentProps) {
         display: "flex",
         zIndex: 3,
         bottom: 75,
-        flexDirection: "column",
         alignItems: "center",
       }}
     >
-      <SubtitleToggle currentTime={props.currentTime} />
+      <Stack direction="row">
+        <SubtitleToggle currentTime={props.currentTime} />
+        <TrackingToggle />
+      </Stack>
+
       <SeekBackOrForward
         onSeek={(direction, howMuch) => props.onSeek(direction, howMuch)}
       />

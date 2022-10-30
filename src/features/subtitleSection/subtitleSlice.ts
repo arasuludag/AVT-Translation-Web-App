@@ -21,10 +21,10 @@ export interface Subtitle {
   position: number;
 }
 
-export interface SubtitleFetch {
+export interface SubtitleSlice {
   transcriptData: Subtitle[];
   workingOndata: Subtitle[];
-  subtitleToDisplay: { isWorkingOn: boolean; id: number };
+  subtitleToDisplay: { isWorkingOn: boolean; id: number; tracked: boolean };
   nextFreeID: number;
   subtitleToScrollInto: {
     version: number;
@@ -34,10 +34,10 @@ export interface SubtitleFetch {
   workingOnSubtitleStatus: "idle" | "loading" | "failed";
 }
 
-const initialState: SubtitleFetch = {
+const initialState: SubtitleSlice = {
   transcriptData: [],
   workingOndata: [],
-  subtitleToDisplay: { isWorkingOn: false, id: -1 },
+  subtitleToDisplay: { isWorkingOn: false, id: -1, tracked: false },
   subtitleToScrollInto: {
     version: 0,
     subtitle: { isWorkingOn: false, id: -1 },
@@ -112,6 +112,9 @@ export const subtitleSlice = createSlice({
       if (foundSubtitle) state.subtitleToDisplay.id = foundSubtitle.id;
       else state.subtitleToDisplay.id = -1;
     },
+    setIsTrackedSubtitle: (state, action: PayloadAction<boolean>) => {
+      state.subtitleToDisplay.tracked = action.payload;
+    },
     setSubtitleToDisplay: (state, action: PayloadAction<boolean>) => {
       state.subtitleToDisplay.isWorkingOn = action.payload;
     },
@@ -185,6 +188,7 @@ export const {
   setActiveSubtitle,
   setSubtitleToDisplay,
   setSubtitleToScrollInto,
+  setIsTrackedSubtitle,
   deleteBox,
 } = subtitleSlice.actions;
 
