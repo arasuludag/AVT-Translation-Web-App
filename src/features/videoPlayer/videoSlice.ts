@@ -8,7 +8,6 @@ export interface Seek {
 
 export interface VideoState {
   seek: Seek;
-  videoHeight: number;
 }
 
 const initialState: VideoState = {
@@ -16,7 +15,6 @@ const initialState: VideoState = {
     seconds: 0,
     version: 0,
   },
-  videoHeight: 0,
 };
 
 export const videoSlice = createSlice({
@@ -27,15 +25,11 @@ export const videoSlice = createSlice({
       state.seek.version++;
       state.seek.seconds = action.payload / 1000;
     },
-    setVideoHeight: (state, action: PayloadAction<number>) => {
-      state.videoHeight = action.payload;
-    },
   },
 });
 
-export const { setVideoTime, setVideoHeight } = videoSlice.actions;
+export const { setVideoTime } = videoSlice.actions;
 
 export const selectVideoTime = (state: RootState) => state.video.seek;
-export const selectVideoHeight = (state: RootState) => state.video.videoHeight;
 
 export default videoSlice.reducer;

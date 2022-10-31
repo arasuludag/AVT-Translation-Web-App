@@ -30,3 +30,14 @@
 .ql-snow {
   border: 0 !important;
 }
+
+.subtitleContainer {
+  overflow-y: auto;
+  height: 100vh;
+}
+
+@media screen and (max-width: 1281px) {
+  .subtitleContainer {
+    height: 59vh;
+  }
+}

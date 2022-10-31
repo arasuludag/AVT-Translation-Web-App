@@ -4,7 +4,7 @@ import { setActiveSubtitle } from "../subtitleSection/subtitleSlice";
 
 import "./videoPlayer.css";
 
-import { selectVideoTime, setVideoHeight } from "./videoSlice";
+import { selectVideoTime } from "./videoSlice";
 import { Grid } from "@mui/material";
 import Subtitle from "./Subtitle";
 import Settings from "../settings/Settings";
@@ -19,6 +19,7 @@ function VideoPlayer(): JSX.Element {
   const videoTime = useAppSelector(selectVideoTime);
 
   const player = useRef<HTMLVideoElement>(null);
+  const divRef = useRef<HTMLDivElement>(null);
 
   // Set video time if VideoTime updates.
   useEffect(() => {
@@ -38,10 +39,6 @@ function VideoPlayer(): JSX.Element {
     dispatch(setActiveSubtitle(currentTime));
   }, [currentTime, dispatch]);
 
-  useEffect(() => {
-    dispatch(setVideoHeight(player.current?.offsetHeight || 0));
-  }, [dispatch, player.current?.offsetHeight]);
-
   // Forward or backward time.
   function onSeek(direction: boolean, howMuch: number) {
     if (player.current) {
@@ -52,7 +49,11 @@ function VideoPlayer(): JSX.Element {
   }
 
   return (
-    <div className="container" onContextMenu={(e) => e.preventDefault()}>
+    <div
+      ref={divRef}
+      className="container"
+      onContextMenu={(e) => e.preventDefault()}
+    >
       <Grid
         container
         sx={{
@@ -74,7 +75,7 @@ function VideoPlayer(): JSX.Element {
       <video
         src={video}
         ref={player}
-        width="100%"
+        className="video"
         controls
         controlsList="nodownload nofullscreen noremoteplayback noplaybackrate"
         disablePictureInPicture
