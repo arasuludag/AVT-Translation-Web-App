@@ -36,7 +36,7 @@
   height: 100vh;
 }
 
-@media screen and (max-width: 1281px) {
+@media screen and (max-width: 1536px) {
   .subtitleContainer {
     height: 59vh;
   }

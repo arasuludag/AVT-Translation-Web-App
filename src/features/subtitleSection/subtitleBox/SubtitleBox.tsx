@@ -132,7 +132,7 @@ function SubtitleBox(props: ChildComponentProps) {
       raised={raised}
       sx={{
         minHeight: 245,
-        minWidth: 450,
+        width: { sx: "100wv", md: 425, xl: 500 },
         margin: "10px 5px",
         borderRadius: 5,
       }}

@@ -23,7 +23,7 @@
   height: 40vh;
 }
 
-@media screen and (min-width: 1281px) {
+@media screen and (min-width: 1536px) {
   .video {
     min-width: 100%;
     max-width: 100%;

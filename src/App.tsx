@@ -40,7 +40,14 @@ function App() {
           alignItems="flex-start"
           className="App"
         >
-          <Grid item xs={12} md={8} lg={8} xl sx={{ backgroundColor: "black" }}>
+          <Grid
+            item
+            xs={12}
+            md={12}
+            lg={12}
+            xl
+            sx={{ backgroundColor: "black" }}
+          >
             <VideoPlayer />
           </Grid>
           <Grid item xs={12} md={12} lg={12} xl={7}>
