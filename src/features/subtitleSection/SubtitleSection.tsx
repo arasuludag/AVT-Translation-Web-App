@@ -1,10 +1,28 @@
-import OriginalTranscript from "./OriginalTranscript";
-import WorkingTranslation from "./WorkingTranslation";
-
 import "./subtitleSection.css";
 import { Grid } from "@mui/material";
+import { useAppDispatch, useAppSelector } from "../../app/hooks";
+import {
+  fetchOriginalTranscript,
+  fetchSubtitle,
+  selectSubtitles,
+  selectTranscript,
+} from "./subtitleSlice";
+import { useEffect } from "react";
+
+import SubtitleBoxesRow from "./SubtitleBoxesRow";
 
 function SubtitleSection(): JSX.Element {
+  const dispatch = useAppDispatch();
+
+  const transcriptSubtitles = useAppSelector(selectTranscript);
+  const subtitles = useAppSelector(selectSubtitles);
+
+  useEffect(() => {
+    // ID will be sent when connected to the backend.
+    dispatch(fetchOriginalTranscript(""));
+    dispatch(fetchSubtitle(""));
+  }, [dispatch]);
+
   return (
     <Grid
       container
@@ -14,10 +32,10 @@ function SubtitleSection(): JSX.Element {
       className="subtitleContainer"
     >
       <Grid item sx={{ display: { xs: "none", sm: "block" } }}>
-        <OriginalTranscript />
+        <SubtitleBoxesRow subtitles={transcriptSubtitles} readOnly={true} />
       </Grid>
       <Grid item>
-        <WorkingTranslation />
+        <SubtitleBoxesRow subtitles={subtitles} readOnly={false} />
       </Grid>
     </Grid>
   );
