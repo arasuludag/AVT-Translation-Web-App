@@ -1,12 +1,15 @@
 import { useMemo } from "react";
+import { useAppSelector } from "../../app/hooks";
 
 import SubtitleBox from "./subtitleBox/SubtitleBox";
-import { Subtitle } from "./subtitleSlice";
+import { selectSubtitleChangeFlag, Subtitle } from "./subtitleSlice";
 
 function OriginalTranscript(props: {
   subtitles: Subtitle[];
   readOnly: boolean;
 }) {
+  const subtitleChangeFlag = useAppSelector(selectSubtitleChangeFlag);
+
   const optimizedBoxes = useMemo(
     () =>
       props.subtitles.map((subtitle: Subtitle, index: number) => {
@@ -19,7 +22,7 @@ function OriginalTranscript(props: {
         );
       }),
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [props.subtitles.length]
+    [subtitleChangeFlag, props.subtitles.length]
   );
 
   return <div>{optimizedBoxes}</div>;

@@ -35,6 +35,7 @@ export default function TopToolbar(props: TopToolbarProps) {
     function checkConflicts(time: number) {
       return subtitles.some(
         (subtitle) =>
+          !subtitle.deleted &&
           subtitle.id !== props.id &&
           subtitle.start_time < time &&
           subtitle.end_time > time

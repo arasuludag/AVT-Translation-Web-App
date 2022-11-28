@@ -19,6 +19,7 @@ export interface Subtitle {
   text: string;
   note: string;
   position: number;
+  deleted?: boolean;
 }
 
 export interface SubtitleSlice {
@@ -32,6 +33,7 @@ export interface SubtitleSlice {
   };
   transcriptStatus: "idle" | "loading" | "failed";
   workingOnSubtitleStatus: "idle" | "loading" | "failed";
+  subtitleChangeFlag: boolean;
 }
 
 const initialState: SubtitleSlice = {
@@ -45,6 +47,7 @@ const initialState: SubtitleSlice = {
   nextFreeID: 0,
   transcriptStatus: "idle",
   workingOnSubtitleStatus: "idle",
+  subtitleChangeFlag: false,
 };
 
 export const subtitleSlice = createSlice({
@@ -78,23 +81,56 @@ export const subtitleSlice = createSlice({
         (subtitle) => subtitle.id === action.payload.idToInsert
       );
 
-      state.workingOndata.splice(index + 1, 0, {
-        id: state.nextFreeID,
-        start_time: action.payload.end_time,
-        end_time:
-          state.workingOndata[index + 1]?.start_time || action.payload.end_time,
-        text: "",
-        note: "",
-        position: 1,
-      });
+      if (state.workingOndata[index + 1].deleted) {
+        state.workingOndata[index + 1] = {
+          ...state.workingOndata[index + 1],
+          deleted: false,
+        };
+      } else {
+        state.workingOndata.splice(index + 1, 0, {
+          id: state.nextFreeID,
+          start_time: action.payload.end_time,
+          end_time:
+            state.workingOndata[index + 1]?.start_time ||
+            action.payload.end_time,
+          text: "",
+          note: "",
+          position: 1,
+        });
+
+        state.transcriptData.splice(index + 1, 0, {
+          id: state.nextFreeID,
+          start_time: action.payload.end_time,
+          end_time:
+            state.workingOndata[index + 1]?.start_time ||
+            action.payload.end_time,
+          text: "",
+          note: "",
+          position: 1,
+          deleted: true,
+        });
+      }
 
       state.nextFreeID++;
+      state.subtitleChangeFlag = !state.subtitleChangeFlag;
     },
     deleteBox: (state, action: PayloadAction<number>) => {
       const index = state.workingOndata.findIndex(
         (subtitle) => subtitle.id === action.payload
       );
-      state.workingOndata.splice(index, 1);
+
+      if (state.transcriptData[index].deleted) {
+        state.workingOndata.splice(index, 1);
+        state.transcriptData.splice(index, 1);
+        return;
+      }
+
+      state.workingOndata[index] = {
+        ...state.workingOndata[index],
+        deleted: true,
+      };
+
+      state.subtitleChangeFlag = !state.subtitleChangeFlag;
     },
     setActiveSubtitle: (state, action: PayloadAction<number>) => {
       let subtitles: Subtitle[];
@@ -105,6 +141,7 @@ export const subtitleSlice = createSlice({
 
       const foundSubtitle = subtitles.find(
         (subtitle) =>
+          !subtitle.deleted &&
           subtitle.start_time <= action.payload &&
           subtitle.end_time > action.payload
       );
@@ -204,5 +241,7 @@ export const selectSubtitleTimings = (state: RootState) =>
   state.subtitle.workingOndata.map(({ note, text, ...timings }) => timings);
 export const selectSubtitleToScrollInto = (state: RootState) =>
   state.subtitle.subtitleToScrollInto;
+export const selectSubtitleChangeFlag = (state: RootState) =>
+  state.subtitle.subtitleChangeFlag;
 
 export default subtitleSlice.reducer;

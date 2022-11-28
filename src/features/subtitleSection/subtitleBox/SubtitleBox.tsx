@@ -28,6 +28,7 @@ function SubtitleBox(props: ChildComponentProps) {
   const dispatch = useAppDispatch();
   const activeSubtitle = useAppSelector(selectActiveSubtitle);
   const subtitleToScrollInto = useAppSelector(selectSubtitleToScrollInto);
+
   const [text, setText] = useState(props.subtitle.text);
   const [time, setTime] = useState({
     start: props.subtitle.start_time,
@@ -131,17 +132,20 @@ function SubtitleBox(props: ChildComponentProps) {
       ref={subtitleBoxRef}
       raised={raised}
       sx={{
-        height: 250,
+        height: 200,
         width: { sx: "100wv", md: 425, xl: 500 },
         margin: "10px 5px",
         borderRadius: 5,
+        opacity: props.subtitle.deleted ? 0.1 : 1,
       }}
     >
-      <CardContent>
-        {optimizedTopToolbar}
-        {optimizedEditor}
-        <CardActions>{optimizedBottomToolbar}</CardActions>
-      </CardContent>
+      {props.subtitle.deleted ? null : (
+        <CardContent>
+          {optimizedTopToolbar}
+          {optimizedEditor}
+          <CardActions>{optimizedBottomToolbar}</CardActions>
+        </CardContent>
+      )}
     </Card>
   );
 }
