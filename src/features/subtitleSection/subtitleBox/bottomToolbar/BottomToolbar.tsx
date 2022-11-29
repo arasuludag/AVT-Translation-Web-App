@@ -25,7 +25,11 @@ export default function BottomToolbar(props: ChildComponentProps) {
       ) : (
         <>
           <AddNote id={props.subtitle.id} note={props.subtitle.note} />
-          <AddBox id={props.subtitle.id} end_time={props.time.end} />
+          <AddBox
+            id={props.subtitle.id}
+            end_time={props.time.end}
+            isInsertedBelow={true}
+          />
         </>
       ),
     [props.readOnly, props.subtitle.id, props.subtitle.note, props.time.end]

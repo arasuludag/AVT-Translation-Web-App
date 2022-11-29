@@ -16,6 +16,7 @@ import { CardActions, Stack } from "@mui/material";
 import ChractersPerLine from "./ChractersPerLine";
 import TopToolbar from "./TopToolbar";
 import BottomToolbar from "./bottomToolbar/BottomToolbar";
+import AddBox from "./bottomToolbar/AddBox";
 
 const h2p = require("html2plaintext");
 
@@ -136,10 +137,18 @@ function SubtitleBox(props: ChildComponentProps) {
         width: { sx: "100wv", md: 425, xl: 500 },
         margin: "10px 5px",
         borderRadius: 5,
-        opacity: props.subtitle.deleted ? 0.1 : 1,
+        opacity: props.subtitle.deleted ? 0.2 : 1,
       }}
     >
-      {props.subtitle.deleted ? null : (
+      {props.subtitle.deleted ? (
+        props.readOnly ? null : (
+          <AddBox
+            id={props.subtitle.id}
+            end_time={time.end}
+            isInsertedBelow={false}
+          />
+        )
+      ) : (
         <CardContent>
           {optimizedTopToolbar}
           {optimizedEditor}
