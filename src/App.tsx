@@ -23,6 +23,9 @@ const lightTheme = createTheme({
     primary: {
       main: "#b8860b",
     },
+    background: {
+      default: "#E9EAEC",
+    },
   },
 });
 
