@@ -1,7 +1,10 @@
 import { InputAdornment, Stack, TextField, Typography } from "@mui/material";
 import { useEffect, useMemo, useState } from "react";
-import { useAppDispatch, useAppSelector } from "../../../app/hooks";
-import { insertToSubtitle, selectSubtitleTimings } from "../subtitleSlice";
+import { useAppDispatch, useAppSelector } from "../../../../app/hooks";
+import {
+  insertToSubtitle,
+  selectSubtitleTimings,
+} from "../../../../slices/subtitleSlice";
 import GoToSecondButton from "./GoToSecondButton";
 
 interface Time {

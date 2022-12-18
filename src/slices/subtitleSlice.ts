@@ -1,8 +1,8 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { RootState } from "../../app/store";
+import { RootState } from "../app/store";
 
-import Transcript from "./subtitle.json";
-import WorkingOnSubtitle from "./subtitleWorkingOn.json";
+import Transcript from "../pages/subtitlingPage/subtitleSection/subtitle.json";
+import WorkingOnSubtitle from "../pages/subtitlingPage/subtitleSection/subtitleWorkingOn.json";
 
 export interface SubtitlePayload {
   start_time: number;

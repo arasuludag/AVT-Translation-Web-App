@@ -1,6 +1,6 @@
 import { Grid } from "@mui/material";
 import { useMemo } from "react";
-import { Subtitle } from "../../subtitleSlice";
+import { Subtitle } from "../../../../../slices/subtitleSlice";
 import AddBox from "./AddBox";
 import AddNote from "./AddNote";
 import ChractersPerSecond from "./ChractersPerSecond";

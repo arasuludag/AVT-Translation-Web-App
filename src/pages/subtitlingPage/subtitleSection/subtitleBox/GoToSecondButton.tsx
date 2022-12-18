@@ -1,8 +1,8 @@
 import PlayCircleFilledWhiteIcon from "@mui/icons-material/PlayCircleFilledWhite";
 import { IconButton } from "@mui/material";
-import { useAppDispatch } from "../../../app/hooks";
-import { setVideoTime } from "../../videoPlayer/videoSlice";
-import { setSubtitleToDisplay } from "../subtitleSlice";
+import { useAppDispatch } from "../../../../app/hooks";
+import { setVideoTime } from "../../../../slices/videoSlice";
+import { setSubtitleToDisplay } from "../../../../slices/subtitleSlice";
 
 export default function GoToSecondButton(props: {
   ms: number;

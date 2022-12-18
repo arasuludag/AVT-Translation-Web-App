@@ -5,14 +5,14 @@ import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
 import SettingsIcon from "@mui/icons-material/Settings";
-import { useAppDispatch, useAppSelector } from "../../app/hooks";
+import { useAppDispatch, useAppSelector } from "../../../app/hooks";
 import {
   selectCPL,
   selectCPS,
   selectSeekAmount,
   setBoxSettings,
   setVideoSettings,
-} from "./settingsSlice";
+} from "../../../slices/settingsSlice";
 import { IconButton, Slider, Stack, Typography } from "@mui/material";
 
 export default function Settings() {

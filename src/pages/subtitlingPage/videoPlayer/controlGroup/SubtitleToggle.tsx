@@ -1,11 +1,11 @@
 import { styled, Switch } from "@mui/material";
 import subtitleIcon from "./subtitleIcon.svg";
-import { useAppDispatch, useAppSelector } from "../../../app/hooks";
+import { useAppDispatch, useAppSelector } from "../../../../app/hooks";
 import {
   selectActiveSubtitle,
   setActiveSubtitle,
   setSubtitleToDisplay,
-} from "../../subtitleSection/subtitleSlice";
+} from "../../../../slices/subtitleSlice";
 
 export default function SubtitleToggle(props: { currentTime: number }) {
   const dispatch = useAppDispatch();

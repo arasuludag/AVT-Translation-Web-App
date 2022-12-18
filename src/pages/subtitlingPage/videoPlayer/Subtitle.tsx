@@ -1,10 +1,10 @@
-import { useAppDispatch, useAppSelector } from "../../app/hooks";
+import { useAppDispatch, useAppSelector } from "../../../app/hooks";
 import {
   selectActiveSubtitle,
   selectSubtitles,
   selectTranscript,
   setSubtitleToScrollInto,
-} from "../subtitleSection/subtitleSlice";
+} from "../../../slices/subtitleSlice";
 import parse from "html-react-parser";
 
 interface ShownSubtitle {

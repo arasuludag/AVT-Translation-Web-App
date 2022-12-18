@@ -1,5 +1,5 @@
-import { useAppDispatch } from "../../../../app/hooks";
-import { insertBox } from "../../subtitleSlice";
+import { useAppDispatch } from "../../../../../app/hooks";
+import { insertBox } from "../../../../../slices/subtitleSlice";
 import AddBoxIcon from "@mui/icons-material/AddBox";
 import { IconButton } from "@mui/material";
 import { useSnackbar } from "notistack";

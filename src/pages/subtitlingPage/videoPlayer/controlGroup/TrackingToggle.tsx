@@ -1,6 +1,6 @@
 import * as React from "react";
-import { useAppDispatch } from "../../../app/hooks";
-import { setIsTrackedSubtitle } from "../../subtitleSection/subtitleSlice";
+import { useAppDispatch } from "../../../../app/hooks";
+import { setIsTrackedSubtitle } from "../../../../slices/subtitleSlice";
 import GpsFixedIcon from "@mui/icons-material/GpsFixed";
 import GpsNotFixedIcon from "@mui/icons-material/GpsNotFixed";
 import { IconButton } from "@mui/material";

@@ -1,10 +1,10 @@
 import { useEffect, useRef, useState } from "react";
-import { useAppDispatch, useAppSelector } from "../../app/hooks";
-import { setActiveSubtitle } from "../subtitleSection/subtitleSlice";
+import { useAppDispatch, useAppSelector } from "../../../app/hooks";
+import { setActiveSubtitle } from "../../../slices/subtitleSlice";
 
 import "./videoPlayer.css";
 
-import { selectVideoTime } from "./videoSlice";
+import { selectVideoTime } from "../../../slices/videoSlice";
 import { Grid } from "@mui/material";
 import Subtitle from "./Subtitle";
 import Settings from "../settings/Settings";

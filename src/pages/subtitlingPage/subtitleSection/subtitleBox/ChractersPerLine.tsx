@@ -1,7 +1,7 @@
 import { Chip, Stack } from "@mui/material";
 import { useMemo } from "react";
-import { useAppSelector } from "../../../app/hooks";
-import { selectCPL } from "../../settings/settingsSlice";
+import { useAppSelector } from "../../../../app/hooks";
+import { selectCPL } from "../../../../slices/settingsSlice";
 
 export default function CharacterPerLine(props: { text: string }) {
   const recievedCPL = useAppSelector(selectCPL);

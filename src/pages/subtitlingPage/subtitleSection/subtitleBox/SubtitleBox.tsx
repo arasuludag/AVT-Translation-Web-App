@@ -8,8 +8,8 @@ import {
   selectActiveSubtitle,
   selectSubtitleToScrollInto,
   Subtitle,
-} from "../subtitleSlice";
-import { useAppDispatch, useAppSelector } from "../../../app/hooks";
+} from "../../../../slices/subtitleSlice";
+import { useAppDispatch, useAppSelector } from "../../../../app/hooks";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { CardActions, Stack } from "@mui/material";
 

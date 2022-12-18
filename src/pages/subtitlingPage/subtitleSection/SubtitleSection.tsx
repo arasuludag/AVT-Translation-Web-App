@@ -1,12 +1,12 @@
 import "./subtitleSection.css";
 import { Grid } from "@mui/material";
-import { useAppDispatch, useAppSelector } from "../../app/hooks";
+import { useAppDispatch, useAppSelector } from "../../../app/hooks";
 import {
   fetchOriginalTranscript,
   fetchSubtitle,
   selectSubtitles,
   selectTranscript,
-} from "./subtitleSlice";
+} from "../../../slices/subtitleSlice";
 import { useEffect } from "react";
 
 import SubtitleBoxesRow from "./SubtitleBoxesRow";

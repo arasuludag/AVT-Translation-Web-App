@@ -1,8 +1,11 @@
 import { useMemo } from "react";
-import { useAppSelector } from "../../app/hooks";
+import { useAppSelector } from "../../../app/hooks";
 
 import SubtitleBox from "./subtitleBox/SubtitleBox";
-import { selectSubtitleChangeFlag, Subtitle } from "./subtitleSlice";
+import {
+  selectSubtitleChangeFlag,
+  Subtitle,
+} from "../../../slices/subtitleSlice";
 
 function OriginalTranscript(props: {
   subtitles: Subtitle[];

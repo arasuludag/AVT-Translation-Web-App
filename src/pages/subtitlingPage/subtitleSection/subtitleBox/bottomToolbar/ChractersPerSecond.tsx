@@ -1,7 +1,7 @@
 import { Chip } from "@mui/material";
 import { useEffect, useState } from "react";
-import { useAppSelector } from "../../../../app/hooks";
-import { selectCPS } from "../../../settings/settingsSlice";
+import { useAppSelector } from "../../../../../app/hooks";
+import { selectCPS } from "../../../../../slices/settingsSlice";
 
 export default function CharacterPerSecond(props: {
   text: string;

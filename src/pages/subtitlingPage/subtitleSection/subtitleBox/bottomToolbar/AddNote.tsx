@@ -1,5 +1,5 @@
-import { useAppDispatch } from "../../../../app/hooks";
-import { insertToSubtitle } from "../../subtitleSlice";
+import { useAppDispatch } from "../../../../../app/hooks";
+import { insertToSubtitle } from "../../../../../slices/subtitleSlice";
 import { useState } from "react";
 import {
   Button,

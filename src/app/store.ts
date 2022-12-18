@@ -1,7 +1,7 @@
 import { configureStore, ThunkAction, Action } from "@reduxjs/toolkit";
-import videoReducer from "../features/videoPlayer/videoSlice";
-import subtitleReducer from "../features/subtitleSection/subtitleSlice";
-import settingsReducer from "../features/settings/settingsSlice";
+import videoReducer from "../slices/videoSlice";
+import subtitleReducer from "../slices/subtitleSlice";
+import settingsReducer from "../slices/settingsSlice";
 
 export const store = configureStore({
   reducer: {

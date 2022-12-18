@@ -1,5 +1,5 @@
-import { useAppDispatch, useAppSelector } from "../../app/hooks";
-import { selectTheme, setTheme } from "./settingsSlice";
+import { useAppDispatch, useAppSelector } from "../../../app/hooks";
+import { selectTheme, setTheme } from "../../../slices/settingsSlice";
 import { styled, Switch } from "@mui/material";
 
 export default function Settings() {

@@ -3,8 +3,8 @@ import ButtonGroup from "@mui/material/ButtonGroup";
 import Box from "@mui/material/Box";
 import RestoreIcon from "@mui/icons-material/Restore";
 import UpdateIcon from "@mui/icons-material/Update";
-import { useAppSelector } from "../../../app/hooks";
-import { selectSeekAmount } from "../../settings/settingsSlice";
+import { useAppSelector } from "../../../../app/hooks";
+import { selectSeekAmount } from "../../../../slices/settingsSlice";
 
 interface Seek {
   onSeek(direction: boolean, howMuch: number): void;

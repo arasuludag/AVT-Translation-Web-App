@@ -1,7 +1,7 @@
 import { IconButton } from "@mui/material";
-import { useAppDispatch } from "../../../../app/hooks";
+import { useAppDispatch } from "../../../../../app/hooks";
 import DeleteIcon from "@mui/icons-material/Delete";
-import { deleteBox } from "../../subtitleSlice";
+import { deleteBox } from "../../../../../slices/subtitleSlice";
 import { useSnackbar } from "notistack";
 
 export default function DeleteBox(props: { id: number }) {

@@ -1,12 +1,12 @@
 import Grid from "@mui/material/Grid";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 
-import VideoPlayer from "./features/videoPlayer/VideoPlayer";
-import SubtitleSection from "./features/subtitleSection/SubtitleSection";
+import VideoPlayer from "./pages/subtitlingPage/videoPlayer/VideoPlayer";
+import SubtitleSection from "./pages/subtitlingPage/subtitleSection/SubtitleSection";
 import { SnackbarProvider } from "notistack";
 import { CssBaseline } from "@mui/material";
 import { useAppSelector } from "./app/hooks";
-import { selectTheme } from "./features/settings/settingsSlice";
+import { selectTheme } from "./slices/settingsSlice";
 
 const darkTheme = createTheme({
   palette: {
