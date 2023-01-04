@@ -3,7 +3,7 @@ import { render, screen } from "@testing-library/react";
 import "@testing-library/jest-dom";
 import { Provider } from "react-redux";
 import { store } from "../app/store";
-import CharacterPerLine from "../features/subtitleSection/subtitleBox/ChractersPerLine";
+import CharacterPerLine from "../pages/subtitlingPage/subtitleSection/subtitleBox/ChractersPerLine";
 
 test("sends a text and expects correct cpl chips", async () => {
   render(

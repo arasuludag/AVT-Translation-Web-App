@@ -12,9 +12,11 @@ export default function CharacterPerLine(props: { text: string }) {
         const lineLength = line.length;
         if (index > 4) return null; // We shouldn't have more than 3 rows.
         if (lineLength === 0) return null;
-        let color = undefined;
-        if (lineLength >= recievedCPL + 15) color = "Maroon";
-        else if (lineLength >= recievedCPL) color = "DarkGoldenRod";
+
+        let backgroundColor = "gray";
+        if (lineLength >= recievedCPL + 15) backgroundColor = "Maroon";
+        else if (lineLength >= recievedCPL) backgroundColor = "DarkGoldenRod";
+
         return (
           <Chip
             key={index}
@@ -26,9 +28,9 @@ export default function CharacterPerLine(props: { text: string }) {
               opacity: "50%",
               width: "40px",
               height: "20px",
-              overflow: "visible",
+              backgroundColor: backgroundColor,
+              color: "white",
             }}
-            style={{ backgroundColor: color }}
           />
         );
       }),

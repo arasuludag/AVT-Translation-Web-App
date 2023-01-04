@@ -3,7 +3,7 @@ import { render, screen } from "@testing-library/react";
 import "@testing-library/jest-dom";
 import { Provider } from "react-redux";
 import { store } from "../app/store";
-import SubtitleBox from "../features/subtitleSection/subtitleBox/SubtitleBox";
+import SubtitleBox from "../pages/subtitlingPage/subtitleSection/subtitleBox/SubtitleBox";
 
 test("renders a subtitle box and expects placeholder texts", async () => {
   render(
