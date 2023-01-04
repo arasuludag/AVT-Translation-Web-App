@@ -15,6 +15,9 @@ import { useSnackbar } from "notistack";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.bubble.css";
 
+// @ts-ignore
+import h2p from "html2plaintext";
+
 export default function AddNote(props: { id: number; note: string }) {
   const dispatch = useAppDispatch();
   const [open, setOpen] = useState(false);
@@ -22,7 +25,7 @@ export default function AddNote(props: { id: number; note: string }) {
   const { enqueueSnackbar } = useSnackbar();
 
   const icon = () => {
-    if (text.length) return <InsertCommentIcon />;
+    if (h2p(text).length) return <InsertCommentIcon />;
     else return <ModeCommentIcon />;
   };
 
@@ -57,7 +60,7 @@ export default function AddNote(props: { id: number; note: string }) {
       <Dialog open={open} onClose={handleClose}>
         <DialogTitle>Comment / Note</DialogTitle>
 
-        <DialogContent>
+        <DialogContent sx={{ maxWidth: "700px" }}>
           <ReactQuill
             theme="bubble"
             className="editor"

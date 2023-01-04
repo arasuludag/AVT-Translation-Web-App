@@ -18,7 +18,8 @@ import TopToolbar from "./TopToolbar";
 import BottomToolbar from "./bottomToolbar/BottomToolbar";
 import AddBox from "./bottomToolbar/AddBox";
 
-const h2p = require("html2plaintext");
+// @ts-ignore
+import h2p from "html2plaintext";
 
 interface ChildComponentProps {
   subtitle: Subtitle;
