@@ -80,7 +80,7 @@ function VideoPlayer(): JSX.Element {
         controlsList="nodownload nofullscreen noremoteplayback noplaybackrate"
         disablePictureInPicture
       ></video>
-      <Subtitle playerWidth={player.current?.offsetWidth || 32} />
+      <Subtitle playerHeight={player.current?.offsetHeight || 400} />
     </div>
   );
 }

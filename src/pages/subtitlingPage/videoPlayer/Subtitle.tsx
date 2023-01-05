@@ -7,11 +7,7 @@ import {
 } from "../../../slices/subtitleSlice";
 import parse from "html-react-parser";
 
-interface ShownSubtitle {
-  playerWidth: number;
-}
-
-export default function ShowSubtitle(props: ShownSubtitle) {
+export default function ShowSubtitle(props: { playerHeight: number }) {
   const dispatch = useAppDispatch();
   const activeSubtitle = useAppSelector(selectActiveSubtitle);
   const subtitle = useAppSelector(selectSubtitles);
@@ -43,7 +39,7 @@ export default function ShowSubtitle(props: ShownSubtitle) {
       className="subtitle"
       style={{
         top: scale(showSubtitle()?.position || 1, 1, 10, 80, 10) + "%",
-        fontSize: props.playerWidth / 30,
+        fontSize: props.playerHeight / 18,
       }}
       onClick={() => {
         dispatch(setSubtitleToScrollInto(activeSubtitle));

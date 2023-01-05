@@ -57,12 +57,13 @@ export default function AddNote(props: { id: number; note: string }) {
       <IconButton onClick={handleClickOpen} title={"Make a note/comment."}>
         {icon()}
       </IconButton>
-      <Dialog open={open} onClose={handleClose}>
+      <Dialog open={open} onClose={handleClose} fullWidth={true} maxWidth="sm">
         <DialogTitle>Comment / Note</DialogTitle>
 
-        <DialogContent sx={{ maxWidth: "700px" }}>
+        <DialogContent>
           <ReactQuill
             theme="bubble"
+            style={{ width: "100%" }}
             className="editor"
             value={text}
             onChange={(value) => {
