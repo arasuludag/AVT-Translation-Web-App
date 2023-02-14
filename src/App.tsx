@@ -34,7 +34,7 @@ function App() {
 
   return (
     <ThemeProvider theme={theme ? darkTheme : lightTheme}>
-      <CssBaseline />
+      <CssBaseline enableColorScheme />
       <SnackbarProvider maxSnack={8} autoHideDuration={2000}>
         <Grid
           container
